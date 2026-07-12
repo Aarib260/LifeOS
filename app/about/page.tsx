@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Globe2, ExternalLink, Sparkles } from "lucide-react";
 import { staggerContainer, staggerItem } from "@/lib/appRegistry";
-import GlassPanel from "@/components/apps/GlassPanel";
+import GlassPanel from "@/components/apps/habits/HabitsApp";
 
 export default function AboutPage() {
   return (

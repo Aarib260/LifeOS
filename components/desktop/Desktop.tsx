@@ -5,13 +5,20 @@ import { Wallpaper } from "./Wallpaper";
 import { DesktopIcon } from "./DesktopIcon";
 import { WindowManager } from "@/components/window-manager/WindowManager";
 import { Taskbar } from "@/components/taskbar/Taskbar";
+import { StartMenu } from "@/components/start-menu/StartMenu";
 import { useWindowStore } from "@/store/windowStore";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { APP_LIST } from "@/lib/appRegistry";
 import { TASKBAR_HEIGHT } from "@/lib/constants";
 
 export function Desktop() {
   const openApp = useWindowStore((s) => s.openApp);
   const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
+
+  useKeyboardShortcuts({
+    onToggleStartMenu: () => setIsStartMenuOpen((open) => !open),
+    onEscape: () => setIsStartMenuOpen(false),
+  });
 
   return (
     <main
@@ -25,9 +32,9 @@ export function Desktop() {
         {APP_LIST.map((app) => (
           <DesktopIcon
             key={app.id}
-            label={app.label}
+            label={app.title}
             icon={app.icon}
-            onOpen={() => openApp(app.id, { title: app.label })}
+            onOpen={() => openApp(app.id, { title: app.title, size: app.defaultSize })}
           />
         ))}
       </div>
@@ -39,7 +46,7 @@ export function Desktop() {
         onToggleStartMenu={() => setIsStartMenuOpen((open) => !open)}
       />
 
-      {/* StartMenu mounts here in Step 6, reading isStartMenuOpen */}
+      <StartMenu isOpen={isStartMenuOpen} onClose={() => setIsStartMenuOpen(false)} />
     </main>
   );
 }
