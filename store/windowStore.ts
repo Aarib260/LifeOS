@@ -5,8 +5,9 @@ import {
   WINDOW_CASCADE_OFFSET,
   DEFAULT_WINDOW_SIZE,
   MIN_WINDOW_SIZE,
+  TASKBAR_HEIGHT,
 } from "@/lib/constants";
-import { generateWindowId } from "@/lib/utils";
+import { generateWindowId, getViewportSize } from "@/lib/utils";
 
 interface OpenAppOptions {
   title?: string;
@@ -60,14 +61,32 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
     const openCount = get().windows.length;
     const cascade = (openCount % 8) * WINDOW_CASCADE_OFFSET;
 
+    const { width: viewportW, height: viewportH } = getViewportSize();
+    const usableHeight = viewportH - TASKBAR_HEIGHT;
+
+    // Clamp requested size to the viewport (with a margin) so a window
+    // sized for desktop (e.g. Calendar at 640px) never opens wider than
+    // a mobile screen.
+    const requestedSize = options?.size ?? DEFAULT_WINDOW_SIZE;
+    const size: Size = {
+      width: Math.min(requestedSize.width, viewportW - 24),
+      height: Math.min(requestedSize.height, usableHeight - 24),
+    };
+
+    const requestedPosition = options?.position ?? { x: 120 + cascade, y: 100 + cascade };
+    const position: Position = {
+      x: Math.min(requestedPosition.x, Math.max(viewportW - size.width - 12, 12)),
+      y: Math.min(requestedPosition.y, Math.max(usableHeight - size.height - 12, 12)),
+    };
+
     zCounter += 1;
 
     const newWindow: WindowState = {
       id,
       appId,
       title: options?.title ?? appId,
-      position: options?.position ?? { x: 120 + cascade, y: 100 + cascade },
-      size: options?.size ?? DEFAULT_WINDOW_SIZE,
+      position,
+      size,
       restoreBounds: null,
       isMinimized: false,
       isMaximized: false,

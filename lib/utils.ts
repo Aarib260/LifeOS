@@ -15,3 +15,14 @@ export function generateWindowId(): string {
 export function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
 }
+
+/**
+ * Current viewport size, SSR-safe (returns a generous fallback on the server
+ * since window opening/clamping only ever runs after mount on the client).
+ */
+export function getViewportSize(): { width: number; height: number } {
+  if (typeof window === "undefined") {
+    return { width: 1280, height: 800 };
+  }
+  return { width: window.innerWidth, height: window.innerHeight };
+}

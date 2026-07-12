@@ -6,7 +6,7 @@ import { useWindowStore } from "@/store/windowStore";
 import { useDraggable } from "@/hooks/useDraggable";
 import { useResizable } from "@/hooks/useResizable";
 import { WindowControls } from "./WindowControls";
-import { cn } from "@/lib/utils";
+import { cn, getViewportSize } from "@/lib/utils";
 import type { WindowState } from "@/types";
 
 interface AppWindowProps {
@@ -26,7 +26,17 @@ export function AppWindow({ window: win, isFocused, children }: AppWindowProps) 
   const { onPointerDown, onPointerMove, onPointerUp } = useDraggable({
     position: win.position,
     disabled: win.isMaximized,
-    onPositionChange: (pos) => updatePosition(win.id, pos),
+    onPositionChange: (pos) => {
+      // Keep at least a sliver of the title bar reachable — prevents a
+      // window from being dragged fully off-screen and becoming unrecoverable,
+      // especially important on narrow viewports.
+      const { width: viewportW, height: viewportH } = getViewportSize();
+      const clamped = {
+        x: Math.min(Math.max(pos.x, -(win.size.width - 80)), viewportW - 80),
+        y: Math.min(Math.max(pos.y, 0), viewportH - 40),
+      };
+      updatePosition(win.id, clamped);
+    },
   });
 
   const {
