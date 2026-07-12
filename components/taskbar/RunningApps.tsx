@@ -1,7 +1,7 @@
 "use client";
 
 import { useWindowStore } from "@/store/windowStore";
-import { APP_METADATA } from "@/lib/appRegistry";
+import { APP_REGISTRY } from "@/lib/appRegistry";
 import { cn } from "@/lib/utils";
 
 /**
@@ -29,9 +29,9 @@ export function RunningApps() {
   };
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1 overflow-x-auto">
       {windows.map((win) => {
-        const Icon = APP_METADATA[win.appId]?.icon;
+        const Icon = APP_REGISTRY[win.appId]?.icon;
         const isFocused = win.id === focusedId && !win.isMinimized;
 
         return (

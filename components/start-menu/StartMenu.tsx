@@ -47,7 +47,7 @@ export function StartMenu({ isOpen, onClose }: StartMenuProps) {
           />
 
           <motion.div
-            className="fixed left-1/2 flex w-[420px] -translate-x-1/2 flex-col rounded-2xl border border-white/[0.08] bg-[#12161F]/95 p-4 shadow-2xl backdrop-blur-xl"
+            className="fixed left-1/2 flex w-[420px] max-w-[92vw] -translate-x-1/2 flex-col rounded-2xl border border-white/[0.08] bg-[#12161F]/95 p-4 shadow-2xl backdrop-blur-xl"
             style={{ bottom: TASKBAR_HEIGHT + 12, zIndex: START_MENU_Z }}
             initial={{ opacity: 0, scale: 0.96, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}

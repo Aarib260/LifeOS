@@ -17,13 +17,13 @@ export function Taskbar({ isStartMenuOpen, onToggleStartMenu }: TaskbarProps) {
       className="fixed bottom-0 left-0 right-0 flex items-center justify-between border-t border-white/[0.06] bg-[#0D1117]/80 px-3 backdrop-blur-xl"
       style={{ height: TASKBAR_HEIGHT, zIndex: TASKBAR_Z }}
     >
-      <div className="flex items-center gap-1">
+      <div className="flex min-w-0 flex-1 items-center gap-1">
         <StartButton isActive={isStartMenuOpen} onClick={onToggleStartMenu} />
-        <div className="mx-1 h-6 w-px bg-white/10" />
+        <div className="mx-1 h-6 w-px shrink-0 bg-white/10" />
         <RunningApps />
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex shrink-0 items-center gap-3">
         <Clock />
         <UserAvatar />
       </div>
