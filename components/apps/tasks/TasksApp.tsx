@@ -1,28 +1,25 @@
-import { ReactNode } from "react";
-import { cn } from "@/lib/utils";
+"use client";
 
-interface BadgeProps {
-  children: ReactNode;
-  color?: "emerald" | "orange" | "blue";
-  className?: string;
-}
+import { useTasks } from "./useTasks";
+import { TaskComposer } from "./TaskComposer";
+import { TaskList } from "./TaskList";
 
-export default function Badge({ children, color = "emerald", className }: BadgeProps) {
-  const colors = {
-    emerald: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-    orange: "bg-orange-500/15 text-orange-400 border-orange-500/30",
-    blue: "bg-blue-500/15 text-blue-400 border-blue-500/30",
-  };
+export function TasksApp() {
+  const { tasks, isLoading, isError, createTask, toggleComplete, deleteTask } = useTasks();
 
   return (
-    <span
-      className={cn(
-        "inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border",
-        colors[color],
-        className
-      )}
-    >
-      {children}
-    </span>
+    <div className="flex h-full flex-col">
+      <TaskComposer
+        onAdd={(title) => createTask.mutate({ title })}
+        isPending={createTask.isPending}
+      />
+      <TaskList
+        tasks={tasks}
+        isLoading={isLoading}
+        isError={isError}
+        onToggle={(task) => toggleComplete.mutate(task)}
+        onDelete={(id) => deleteTask.mutate(id)}
+      />
+    </div>
   );
 }
