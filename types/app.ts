@@ -13,8 +13,7 @@ export type AppId =
   | "calendar"
   | "journal"
   | "ai-assistant"
-  | "settings"
-  | "atlas";
+  | "settings";
 
 export interface AppDefinition {
   id: AppId;
