@@ -55,7 +55,7 @@ export const APP_REGISTRY: AppRegistry = {
     title: "Calendar",
     icon: CalendarDays,
     component: CalendarApp,
-    defaultSize: { width: 640, height: 480 },
+    defaultSize: { width: 760, height: 540 },
     defaultPosition: { x: 200, y: 100 },
   },
   journal: {
