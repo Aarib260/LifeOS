@@ -24,6 +24,7 @@ interface WindowStore {
 
   openApp: (appId: AppId, options?: OpenAppOptions) => string;
   closeWindow: (id: string) => void;
+  closeAllWindows: () => void;
   minimizeWindow: (id: string) => void;
   restoreWindow: (id: string) => void;
   toggleMaximize: (id: string) => void;
@@ -116,6 +117,10 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
 
       return { windows: remaining, focusedId: nextFocused };
     });
+  },
+
+  closeAllWindows: () => {
+    set({ windows: [], focusedId: null });
   },
 
   minimizeWindow: (id) => {
