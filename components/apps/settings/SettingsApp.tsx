@@ -2,6 +2,8 @@
 
 import { useWindowStore } from "@/store/windowStore";
 import { WallpaperPicker } from "./WallpaperPicker";
+import { IconSizePicker } from "./IconSizePicker";
+import { GlassEffectPicker } from "./GlassEffectPicker";
 
 export function SettingsApp() {
   const closeAllWindows = useWindowStore((s) => s.closeAllWindows);
@@ -14,6 +16,20 @@ export function SettingsApp() {
           Wallpaper
         </h3>
         <WallpaperPicker />
+      </section>
+
+      <section>
+        <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-white/40">
+          Desktop Icon Size
+        </h3>
+        <IconSizePicker />
+      </section>
+
+      <section>
+        <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-white/40">
+          Taskbar Glass Effect
+        </h3>
+        <GlassEffectPicker />
       </section>
 
       <section>
@@ -33,8 +49,8 @@ export function SettingsApp() {
       <section>
         <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-white/40">About</h3>
         <p className="text-xs text-white/40">
-          LifeOS — a browser-based personal operating system. Account and shortcut
-          preferences aren&apos;t built yet.
+          LifeOS — a browser-based personal operating system. Account preferences
+          aren&apos;t built yet.
         </p>
       </section>
     </div>

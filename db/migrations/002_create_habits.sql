@@ -1,3 +1,5 @@
+-- Run against your Neon Postgres database, same as 001_create_tasks.sql.
+--
 -- Two tables: `habits` is the definition (name, color, which days it's
 -- scheduled for), `habit_logs` is one row per day it was actually
 -- completed. Streaks are computed from habit_logs at read time rather

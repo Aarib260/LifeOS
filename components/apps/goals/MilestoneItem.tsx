@@ -26,7 +26,7 @@ export function MilestoneItem({ milestone, onToggle, onDelete }: MilestoneItemPr
       />
       <span
         className={cn(
-          "flex-1 truncate text-xs",
+          "min-w-0 flex-1 truncate text-xs",
           milestone.isComplete ? "text-white/35 line-through" : "text-white/70"
         )}
       >

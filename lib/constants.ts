@@ -4,6 +4,9 @@ export const TASKBAR_HEIGHT = 56;
 /** Starting z-index for the first window. Taskbar/StartMenu sit above this range. */
 export const WINDOW_Z_BASE = 100;
 
+/** z-index for the fixed taskbar — above all windows, below the Start Menu overlay. */
+export const TASKBAR_Z = 900;
+
 /** z-index for the Start Menu overlay — must sit above all windows. */
 export const START_MENU_Z = 1000;
 

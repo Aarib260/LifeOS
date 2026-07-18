@@ -1,10 +1,9 @@
 "use client";
 
-import type { AppMetadata } from "@/lib/appRegistry";
-import type { AppId } from "@/types";
+import type { AppDefinition, AppId } from "@/types";
 
 interface AppGridProps {
-  apps: AppMetadata[];
+  apps: AppDefinition[];
   onLaunch: (appId: AppId) => void;
 }
 
@@ -30,7 +29,7 @@ export function AppGrid({ apps, onLaunch }: AppGridProps) {
               <Icon className="h-5 w-5 text-cyan-100/90" />
             </div>
             <span className="line-clamp-2 text-[11px] leading-tight text-white/80">
-              {app.label}
+              {app.title}
             </span>
           </button>
         );

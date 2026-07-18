@@ -1,3 +1,7 @@
+-- Run this against your Neon Postgres database before using the Tasks app.
+-- If Atlas already has a migrations setup/runner, fold this into that
+-- instead of running it standalone.
+
 CREATE TABLE IF NOT EXISTS tasks (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title       TEXT NOT NULL,
@@ -8,6 +12,6 @@ CREATE TABLE IF NOT EXISTS tasks (
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
- 
+
 CREATE INDEX IF NOT EXISTS idx_tasks_is_complete ON tasks (is_complete);
 CREATE INDEX IF NOT EXISTS idx_tasks_created_at ON tasks (created_at DESC);

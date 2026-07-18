@@ -34,7 +34,9 @@ export function Desktop() {
             key={app.id}
             label={app.title}
             icon={app.icon}
-            onOpen={() => openApp(app.id, { title: app.title, size: app.defaultSize })}
+            onOpen={() =>
+              openApp(app.id, { title: app.title, size: app.defaultSize, minSize: app.minSize })
+            }
           />
         ))}
       </div>

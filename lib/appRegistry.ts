@@ -57,14 +57,16 @@ export const APP_REGISTRY: AppRegistry = {
     component: CalendarApp,
     defaultSize: { width: 760, height: 540 },
     defaultPosition: { x: 200, y: 100 },
+    minSize: { width: 420, height: 360 },
   },
   journal: {
     id: "journal",
     title: "Journal",
     icon: BookOpen,
     component: JournalApp,
-    defaultSize: { width: 520, height: 460 },
+    defaultSize: { width: 680, height: 520 },
     defaultPosition: { x: 220, y: 120 },
+    minSize: { width: 380, height: 320 },
   },
   "ai-assistant": {
     id: "ai-assistant",

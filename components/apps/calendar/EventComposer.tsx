@@ -54,13 +54,13 @@ export function EventComposer({ selectedDate, onAdd, isPending }: EventComposerP
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="flex-1 rounded-md border border-white/[0.08] bg-white/[0.04] px-2 py-1.5 text-xs text-white/70 outline-none focus:border-cyan-400/30 [color-scheme:dark]"
+          className="min-w-0 flex-1 rounded-md border border-white/[0.08] bg-white/[0.04] px-2 py-1.5 text-xs text-white/70 outline-none focus:border-cyan-400/30 [color-scheme:dark]"
         />
         <input
           type="time"
           value={startTime}
           onChange={(e) => setStartTime(e.target.value)}
-          className="rounded-md border border-white/[0.08] bg-white/[0.04] px-2 py-1.5 text-xs text-white/70 outline-none focus:border-cyan-400/30 [color-scheme:dark]"
+          className="min-w-0 flex-1 rounded-md border border-white/[0.08] bg-white/[0.04] px-2 py-1.5 text-xs text-white/70 outline-none focus:border-cyan-400/30 [color-scheme:dark]"
         />
       </div>
 

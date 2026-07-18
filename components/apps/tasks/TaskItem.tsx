@@ -36,7 +36,7 @@ export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
 
       <span
         className={cn(
-          "flex-1 truncate text-sm",
+          "min-w-0 flex-1 truncate text-sm",
           task.isComplete ? "text-white/35 line-through" : "text-white/85"
         )}
       >

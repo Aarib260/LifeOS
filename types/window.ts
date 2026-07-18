@@ -22,6 +22,8 @@ export interface WindowState {
   title: string;
   position: Position;
   size: Size;
+  /** Resize floor for this window — copied from AppDefinition.minSize at open time, falls back to the global default */
+  minSize: Size;
   /** Position/size saved before maximizing, so we can restore on un-maximize */
   restoreBounds: { position: Position; size: Size } | null;
   isMinimized: boolean;

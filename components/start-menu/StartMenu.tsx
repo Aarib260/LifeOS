@@ -27,7 +27,7 @@ export function StartMenu({ isOpen, onClose }: StartMenuProps) {
 
   const handleLaunch = (appId: AppId) => {
     const app = APP_LIST.find((a) => a.id === appId);
-    openApp(appId, { title: app?.title ?? appId, size: app?.defaultSize });
+    openApp(appId, { title: app?.title ?? appId, size: app?.defaultSize, minSize: app?.minSize });
     setQuery("");
     onClose();
   };

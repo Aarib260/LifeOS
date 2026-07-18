@@ -1,16 +1,31 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { CalendarClock, X } from "lucide-react";
 import { MonthGrid } from "./MonthGrid";
 import { EventSidebar } from "./EventSidebar";
 import { useEvents } from "./useEvents";
 import { toDateString } from "@/lib/calendarUtils";
+import { useElementWidth } from "@/hooks/useElementWidth";
+
+/**
+ * Below this width, the sidebar has no room to sit beside the grid —
+ * it becomes a slide-over drawer instead. This is measured against the
+ * app's own rendered width (via ResizeObserver), not the browser
+ * viewport, since this component lives inside a resizable OS window.
+ */
+const NARROW_BREAKPOINT = 560;
 
 export function CalendarApp() {
   const today = new Date();
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth()); // 0-11
   const [selectedDate, setSelectedDate] = useState(toDateString(today));
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const { ref, width } = useElementWidth<HTMLDivElement>();
+  const isNarrow = width > 0 && width < NARROW_BREAKPOINT;
 
   const { events, isLoading, isError, createEvent, deleteEvent } = useEvents();
 
@@ -32,29 +47,84 @@ export function CalendarApp() {
     }
   };
 
+  const handleSelectDate = (date: string) => {
+    setSelectedDate(date);
+    if (isNarrow) setIsDrawerOpen(true);
+  };
+
+  const sidebar = (
+    <EventSidebar
+      events={events}
+      selectedDate={selectedDate}
+      onAdd={(input) => createEvent.mutate(input)}
+      onDelete={(id) => deleteEvent.mutate(id)}
+      isPending={createEvent.isPending}
+      isLoading={isLoading}
+      isError={isError}
+    />
+  );
+
   return (
-    <div className="flex h-full">
-      <div className="flex-1 overflow-hidden">
+    <div ref={ref} className="relative flex h-full">
+      <div className="relative flex-1 overflow-hidden">
         <MonthGrid
           year={year}
           month={month}
           events={events}
           selectedDate={selectedDate}
-          onSelectDate={setSelectedDate}
+          onSelectDate={handleSelectDate}
           onPrevMonth={goToPrevMonth}
           onNextMonth={goToNextMonth}
         />
+
+        {isNarrow && (
+          <button
+            type="button"
+            onClick={() => setIsDrawerOpen(true)}
+            aria-label="Open events panel"
+            className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-md text-white/50 hover:bg-white/[0.06] hover:text-white/85"
+          >
+            <CalendarClock className="h-4 w-4" />
+          </button>
+        )}
       </div>
 
-      <EventSidebar
-        events={events}
-        selectedDate={selectedDate}
-        onAdd={(input) => createEvent.mutate(input)}
-        onDelete={(id) => deleteEvent.mutate(id)}
-        isPending={createEvent.isPending}
-        isLoading={isLoading}
-        isError={isError}
-      />
+      {!isNarrow && sidebar}
+
+      {isNarrow && (
+        <AnimatePresence>
+          {isDrawerOpen && (
+            <>
+              <motion.div
+                className="absolute inset-0 z-10 bg-black/40"
+                onClick={() => setIsDrawerOpen(false)}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              />
+              <motion.div
+                className="absolute right-0 top-0 z-20 h-full"
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "spring", stiffness: 340, damping: 32 }}
+              >
+                <div className="relative h-full bg-[#12161F]">
+                  <button
+                    type="button"
+                    onClick={() => setIsDrawerOpen(false)}
+                    aria-label="Close events panel"
+                    className="absolute -left-8 top-2 flex h-7 w-7 items-center justify-center rounded-md bg-[#12161F] text-white/60 hover:text-white/90"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                  {sidebar}
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      )}
     </div>
   );
 }

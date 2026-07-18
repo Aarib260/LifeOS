@@ -13,6 +13,7 @@ interface OpenAppOptions {
   title?: string;
   size?: Size;
   position?: Position;
+  minSize?: Size;
   allowMultipleInstances?: boolean;
 }
 
@@ -82,12 +83,15 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
 
     zCounter += 1;
 
+    const minSize = options?.minSize ?? MIN_WINDOW_SIZE;
+
     const newWindow: WindowState = {
       id,
       appId,
       title: options?.title ?? appId,
       position,
       size,
+      minSize,
       restoreBounds: null,
       isMinimized: false,
       isMaximized: false,
@@ -181,12 +185,15 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
   },
 
   updateSize: (id, size) => {
-    const clamped: Size = {
-      width: Math.max(size.width, MIN_WINDOW_SIZE.width),
-      height: Math.max(size.height, MIN_WINDOW_SIZE.height),
-    };
     set((state) => ({
-      windows: state.windows.map((w) => (w.id === id ? { ...w, size: clamped } : w)),
+      windows: state.windows.map((w) => {
+        if (w.id !== id) return w;
+        const clamped: Size = {
+          width: Math.max(size.width, w.minSize.width),
+          height: Math.max(size.height, w.minSize.height),
+        };
+        return { ...w, size: clamped };
+      }),
     }));
   },
 
