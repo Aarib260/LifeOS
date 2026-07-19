@@ -1,10 +1,5 @@
-import { Providers } from "./providers";
-import { Desktop } from "@/components/desktop/Desktop";
+import { LandingPage } from "@/components/landing/LandingPage";
 
 export default function Home() {
-  return (
-    <Providers>
-      <Desktop />
-    </Providers>
-  );
+  return <LandingPage />;
 }
