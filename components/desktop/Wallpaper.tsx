@@ -51,7 +51,7 @@ function GradientWallpaper({ colors }: { colors: [string, string] }) {
   return (
     <div
       aria-hidden
-      className="fixed inset-0 z-0 overflow-hidden bg-[#0A0E14] pointer-events-none"
+      className="fixed inset-0 z-0 overflow-hidden bg-[var(--bg-base)] pointer-events-none"
     >
       <motion.div
         className="absolute h-[60vw] w-[60vw] rounded-full opacity-30 blur-3xl"

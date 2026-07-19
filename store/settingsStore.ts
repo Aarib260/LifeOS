@@ -4,6 +4,7 @@ import { persist } from "zustand/middleware";
 export type WallpaperKind = "gradient" | "photo";
 export type IconSize = "small" | "medium" | "large";
 export type GlassIntensity = "subtle" | "medium" | "strong";
+export type Theme = "dark" | "light";
 
 export interface WallpaperPreset {
   id: string;
@@ -71,6 +72,10 @@ interface SettingsStore {
 
   taskbarGlass: GlassIntensity;
   setTaskbarGlass: (level: GlassIntensity) => void;
+
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+  toggleTheme: () => void;
 }
 
 /**
@@ -95,6 +100,10 @@ export const useSettingsStore = create<SettingsStore>()(
 
       taskbarGlass: "medium",
       setTaskbarGlass: (level) => set({ taskbarGlass: level }),
+
+      theme: "dark",
+      setTheme: (theme) => set({ theme }),
+      toggleTheme: () => set((s) => ({ theme: s.theme === "dark" ? "light" : "dark" })),
     }),
     { name: "lifeos-settings" }
   )

@@ -5,9 +5,10 @@ import { CheckSquare, Repeat, Target, Sparkles } from "lucide-react";
 
 /**
  * A stylized, illustrative mockup of the LifeOS desktop — built from the
- * same glass-panel/cyan visual language as the real shell, not an actual
- * screenshot. Keeps the hero visual in sync with the product's real
- * aesthetic without depending on a static image asset.
+ * same glass-panel visual language as the real shell, recolored to this
+ * landing page's coral accent. Not an actual screenshot; keeps the hero
+ * visual in sync with the product's shell aesthetic (windows, taskbar)
+ * without depending on a static image asset.
  */
 export function OSMockup() {
   return (
@@ -20,8 +21,8 @@ export function OSMockup() {
       <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0A0E14] shadow-2xl">
         {/* Ambient backdrop, echoing the real Wallpaper component */}
         <div className="absolute inset-0">
-          <div className="absolute -left-10 -top-10 h-64 w-64 rounded-full bg-cyan-400/20 blur-3xl" />
-          <div className="absolute -right-10 bottom-0 h-56 w-56 rounded-full bg-indigo-400/20 blur-3xl" />
+          <div className="absolute -left-10 -top-10 h-64 w-64 rounded-full bg-[#EA7C5C]/20 blur-3xl" />
+          <div className="absolute -right-10 bottom-0 h-56 w-56 rounded-full bg-[#F4EEE2]/10 blur-3xl" />
         </div>
 
         <div className="relative aspect-[16/10] p-6">
@@ -32,7 +33,7 @@ export function OSMockup() {
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           >
             <div className="flex h-7 items-center gap-1.5 border-b border-white/[0.06] px-3">
-              <CheckSquare className="h-3 w-3 text-cyan-300" />
+              <CheckSquare className="h-3 w-3 text-[#EA7C5C]" />
               <span className="text-[10px] text-white/60">Tasks</span>
             </div>
             <div className="space-y-1.5 p-3">
@@ -51,14 +52,14 @@ export function OSMockup() {
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
           >
             <div className="flex h-7 items-center gap-1.5 border-b border-white/[0.06] px-3">
-              <Repeat className="h-3 w-3 text-cyan-300" />
+              <Repeat className="h-3 w-3 text-[#EA7C5C]" />
               <span className="text-[10px] text-white/60">Habits</span>
             </div>
             <div className="flex items-center gap-1 p-3">
               {[1, 1, 1, 0, 1, 0, 0].map((v, i) => (
                 <div
                   key={i}
-                  className={`h-3 w-3 rounded-full ${v ? "bg-cyan-400/70" : "border border-white/15"}`}
+                  className={`h-3 w-3 rounded-full ${v ? "bg-[#EA7C5C]/80" : "border border-white/15"}`}
                 />
               ))}
             </div>
@@ -71,7 +72,7 @@ export function OSMockup() {
                 key={i}
                 className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/[0.06]"
               >
-                <Icon className="h-3.5 w-3.5 text-cyan-100/80" />
+                <Icon className="h-3.5 w-3.5 text-[#EA7C5C]/80" />
               </div>
             ))}
           </div>

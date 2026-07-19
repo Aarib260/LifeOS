@@ -1,15 +1,19 @@
 import Link from "next/link";
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
 
 export function LandingNav() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.06] bg-[#0A0E14]/70 backdrop-blur-xl">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border-1)] bg-[var(--landing-nav-bg)] backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <span className="text-sm font-semibold tracking-tight text-white">LifeOS</span>
+        <span className="text-sm font-semibold tracking-tight text-[var(--landing-heading)]">
+          LifeOS
+        </span>
 
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <Link
             href="/login"
-            className="text-sm text-white/60 transition-colors hover:text-white/90"
+            className="text-sm text-[var(--text-3)] transition-colors hover:text-[var(--text-1)]"
           >
             Sign In
           </Link>

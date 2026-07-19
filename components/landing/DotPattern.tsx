@@ -10,7 +10,7 @@ interface DotPatternProps {
 export function DotPattern({
   className,
   fadeDirection = "radial",
-  color = "rgba(244,238,226,0.22)",
+  color = "var(--landing-dot-color)",
 }: DotPatternProps) {
   const maskImage =
     fadeDirection === "radial"

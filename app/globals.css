@@ -259,3 +259,82 @@ max-width:640px;
 .animate-spin-slow {
   animation: spin-slow 120s linear infinite;
 }
+
+/* ============================================================
+   LifeOS theme tokens — light/dark mode
+   Toggled via [data-theme="light"] / [data-theme="dark"] on <html>.
+   Everything below resolves automatically at runtime; no component
+   needs conditional logic, they just reference var(--token-name).
+   ============================================================ */
+
+:root,
+[data-theme="dark"] {
+  /* Shared neutrals — used by both the OS shell/apps and the landing pages */
+  --text-1: rgba(255, 255, 255, 0.88);
+  --text-2: rgba(255, 255, 255, 0.75);
+  --text-3: rgba(255, 255, 255, 0.55);
+  --text-4: rgba(255, 255, 255, 0.38);
+  --text-5: rgba(255, 255, 255, 0.2);
+
+  --surface-1: rgba(255, 255, 255, 0.03);
+  --surface-2: rgba(255, 255, 255, 0.06);
+  --surface-3: rgba(255, 255, 255, 0.1);
+
+  --border-1: rgba(255, 255, 255, 0.06);
+  --border-2: rgba(255, 255, 255, 0.08);
+  --border-3: rgba(255, 255, 255, 0.13);
+
+  /* OS shell — cool navy-tinted darks */
+  --bg-base: #0a0e14;
+  --bg-panel: #12161f;
+  --bg-panel-90: rgba(18, 22, 31, 0.9);
+  --bg-panel-95: rgba(18, 22, 31, 0.95);
+  --bg-taskbar-95: rgba(13, 17, 23, 0.95);
+  --bg-taskbar-80: rgba(13, 17, 23, 0.8);
+  --bg-taskbar-55: rgba(13, 17, 23, 0.55);
+
+  /* Landing/login/signup — warm charcoal + coral accent (Option 1) */
+  --landing-bg: #0a0e14;
+  --landing-panel: rgba(0, 0, 0, 0.4);
+  --landing-heading: #f4eee2;
+  --landing-nav-bg: rgba(10, 14, 20, 0.7);
+  --landing-dot-color: rgba(244, 238, 226, 0.22);
+  --landing-accent: #ea7c5c;
+  --landing-accent-hover: #f0906f;
+  --landing-accent-text: #0a0e14;
+}
+
+[data-theme="light"] {
+  --text-1: rgba(20, 20, 22, 0.9);
+  --text-2: rgba(20, 20, 22, 0.75);
+  --text-3: rgba(20, 20, 22, 0.58);
+  --text-4: rgba(20, 20, 22, 0.42);
+  --text-5: rgba(20, 20, 22, 0.24);
+
+  --surface-1: rgba(20, 20, 22, 0.04);
+  --surface-2: rgba(20, 20, 22, 0.06);
+  --surface-3: rgba(20, 20, 22, 0.09);
+
+  --border-1: rgba(20, 20, 22, 0.08);
+  --border-2: rgba(20, 20, 22, 0.1);
+  --border-3: rgba(20, 20, 22, 0.15);
+
+  /* OS shell — light neutral */
+  --bg-base: #eef1f4;
+  --bg-panel: #ffffff;
+  --bg-panel-90: rgba(255, 255, 255, 0.9);
+  --bg-panel-95: rgba(255, 255, 255, 0.95);
+  --bg-taskbar-95: rgba(255, 255, 255, 0.95);
+  --bg-taskbar-80: rgba(255, 255, 255, 0.8);
+  --bg-taskbar-55: rgba(255, 255, 255, 0.55);
+
+  /* Landing/login/signup — warm cream + tan accent (Option 3) */
+  --landing-bg: #f3eee4;
+  --landing-panel: rgba(34, 31, 26, 0.05);
+  --landing-heading: #221f1a;
+  --landing-nav-bg: rgba(243, 238, 228, 0.75);
+  --landing-dot-color: rgba(34, 31, 26, 0.18);
+  --landing-accent: #b8865b;
+  --landing-accent-hover: #a6754b;
+  --landing-accent-text: #ffffff;
+}

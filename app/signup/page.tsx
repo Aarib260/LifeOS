@@ -83,7 +83,7 @@ export default function SignupPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Jane Doe"
-                  className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/25"
+                  className="w-full bg-transparent text-sm text-[var(--text-1)] outline-none placeholder:text-white/25"
                 />
               </div>
             </div>
@@ -100,7 +100,7 @@ export default function SignupPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/25"
+                  className="w-full bg-transparent text-sm text-[var(--text-1)] outline-none placeholder:text-white/25"
                 />
               </div>
             </div>
@@ -118,7 +118,7 @@ export default function SignupPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Create a strong password"
-                  className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/25"
+                  className="w-full bg-transparent text-sm text-[var(--text-1)] outline-none placeholder:text-white/25"
                 />
                 <button
                   type="button"

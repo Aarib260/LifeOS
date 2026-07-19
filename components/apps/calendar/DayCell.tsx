@@ -32,7 +32,7 @@ export function DayCell({ date, isCurrentMonth, isToday, isSelected, events, onC
       <span
         className={cn(
           "flex h-5 w-5 items-center justify-center rounded-full text-[11px]",
-          isToday ? "bg-cyan-400/80 font-medium text-[#0A0E14]" : "text-white/70"
+          isToday ? "bg-cyan-400/80 font-medium text-[var(--bg-base)]" : "text-white/70"
         )}
       >
         {date.getDate()}

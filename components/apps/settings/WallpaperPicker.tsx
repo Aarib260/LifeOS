@@ -69,7 +69,7 @@ export function WallpaperPicker() {
                   background:
                     preset.kind === "photo"
                       ? `url(${preset.thumbnailUrl}) center/cover`
-                      : `linear-gradient(135deg, ${preset.colors?.[0]} 0%, #0A0E14 45%, ${preset.colors?.[1]} 100%)`,
+                      : `linear-gradient(135deg, ${preset.colors?.[0]} 0%, var(--bg-base) 45%, ${preset.colors?.[1]} 100%)`,
                 }}
               >
                 {isActive && <Check className="h-4 w-4 text-white drop-shadow" />}
