@@ -15,7 +15,7 @@ export function LandingNav() {
           </Link>
           <Link
             href="/signup"
-            className="rounded-lg bg-cyan-400/15 px-4 py-2 text-sm font-medium text-cyan-300 transition-colors hover:bg-cyan-400/25"
+            className="rounded-full bg-[#EA7C5C]/15 px-4 py-2 text-sm font-medium text-[#EA7C5C] transition-colors hover:bg-[#EA7C5C]/25"
           >
             Get Started
           </Link>
