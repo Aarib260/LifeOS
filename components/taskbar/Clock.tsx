@@ -21,9 +21,9 @@ export function Clock() {
   const date = now.toLocaleDateString([], { month: "numeric", day: "numeric", year: "numeric" });
 
   return (
-    <div className="flex flex-col items-end px-1 font-mono leading-tight text-white/80">
+    <div className="flex flex-col items-end px-1 font-mono leading-tight text-[var(--text-2)]">
       <span className="text-xs">{time}</span>
-      <span className="text-[10px] text-white/50">{date}</span>
+      <span className="text-[10px] text-[var(--text-3)]">{date}</span>
     </div>
   );
 }

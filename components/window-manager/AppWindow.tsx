@@ -53,8 +53,8 @@ export function AppWindow({ window: win, isFocused, children }: AppWindowProps) 
     <motion.div
       className={cn(
         "absolute flex flex-col overflow-hidden rounded-xl border shadow-2xl",
-        "bg-[#12161F]/90 backdrop-blur-xl",
-        isFocused ? "border-cyan-400/30 shadow-cyan-500/10" : "border-white/[0.08]",
+        "bg-[var(--bg-panel-90)] backdrop-blur-xl",
+        isFocused ? "border-cyan-400/30 shadow-cyan-500/10" : "border-[var(--border-2)]",
         win.isMinimized && "pointer-events-none"
       )}
       style={{
@@ -76,13 +76,13 @@ export function AppWindow({ window: win, isFocused, children }: AppWindowProps) 
     >
       {/* Title bar — drag handle, double-click to maximize */}
       <div
-        className="flex h-10 shrink-0 items-center justify-between border-b border-white/[0.06] px-3 cursor-grab active:cursor-grabbing"
+        className="flex h-10 shrink-0 items-center justify-between border-b border-[var(--border-1)] px-3 cursor-grab active:cursor-grabbing"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onDoubleClick={() => toggleMaximize(win.id)}
       >
-        <span className="truncate text-xs font-medium text-white/70">{win.title}</span>
+        <span className="truncate text-xs font-medium text-[var(--text-2)]">{win.title}</span>
         <WindowControls
           onMinimize={() => minimizeWindow(win.id)}
           onMaximize={() => toggleMaximize(win.id)}

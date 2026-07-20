@@ -39,7 +39,7 @@ export function Toolbar({ editor }: ToolbarProps) {
   ];
 
   return (
-    <div className="flex items-center gap-0.5 border-b border-white/[0.06] px-3 py-1.5">
+    <div className="flex items-center gap-0.5 border-b border-[var(--border-1)] px-3 py-1.5">
       {buttons.map(({ icon: Icon, label, isActive, onClick }) => (
         <button
           key={label}
@@ -51,7 +51,7 @@ export function Toolbar({ editor }: ToolbarProps) {
             "flex h-7 w-7 items-center justify-center rounded-md transition-colors",
             isActive
               ? "bg-cyan-400/20 text-cyan-300"
-              : "text-white/50 hover:bg-white/[0.06] hover:text-white/85"
+              : "text-[var(--text-3)] hover:bg-[var(--surface-2)] hover:text-[var(--text-2)]"
           )}
         >
           <Icon className="h-3.5 w-3.5" />

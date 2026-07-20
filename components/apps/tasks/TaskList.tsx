@@ -13,7 +13,7 @@ interface TaskListProps {
 
 export function TaskList({ tasks, isLoading, isError, onToggle, onDelete }: TaskListProps) {
   if (isLoading) {
-    return <p className="p-6 text-center text-xs text-white/30">Loading tasks...</p>;
+    return <p className="p-6 text-center text-xs text-[var(--text-4)]">Loading tasks...</p>;
   }
 
   if (isError) {
@@ -25,7 +25,7 @@ export function TaskList({ tasks, isLoading, isError, onToggle, onDelete }: Task
   }
 
   if (tasks.length === 0) {
-    return <p className="p-6 text-center text-xs text-white/30">No tasks yet — add one above.</p>;
+    return <p className="p-6 text-center text-xs text-[var(--text-4)]">No tasks yet — add one above.</p>;
   }
 
   const incomplete = tasks.filter((t) => !t.isComplete);
@@ -44,7 +44,7 @@ export function TaskList({ tasks, isLoading, isError, onToggle, onDelete }: Task
 
       {complete.length > 0 && (
         <>
-          <div className="px-3 pt-3 pb-1 text-[11px] font-medium uppercase tracking-wide text-white/30">
+          <div className="px-3 pt-3 pb-1 text-[11px] font-medium uppercase tracking-wide text-[var(--text-4)]">
             Completed
           </div>
           {complete.map((task) => (

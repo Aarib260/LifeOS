@@ -26,7 +26,7 @@ export function AIAssistantApp() {
     <div className="flex h-full flex-col">
       <div ref={scrollRef} className="flex-1 space-y-2 overflow-y-auto p-3">
         {messages.length === 0 && (
-          <div className="flex h-full flex-col items-center justify-center gap-2 text-center text-white/30">
+          <div className="flex h-full flex-col items-center justify-center gap-2 text-center text-[var(--text-4)]">
             <Sparkles className="h-6 w-6" />
             <p className="max-w-[220px] text-xs">
               Ask about your tasks, habits, goals, or upcoming events.
@@ -40,7 +40,7 @@ export function AIAssistantApp() {
 
         {isPending && (
           <div className="flex justify-start">
-            <div className="rounded-xl bg-white/[0.05] px-3 py-2 text-sm text-white/40">
+            <div className="rounded-xl bg-[var(--surface-2)] px-3 py-2 text-sm text-[var(--text-4)]">
               Thinking...
             </div>
           </div>
@@ -53,13 +53,13 @@ export function AIAssistantApp() {
         )}
       </div>
 
-      <form onSubmit={handleSubmit} className="flex items-center gap-2 border-t border-white/[0.06] p-3">
+      <form onSubmit={handleSubmit} className="flex items-center gap-2 border-t border-[var(--border-1)] p-3">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask something..."
-          className="flex-1 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-white/90 outline-none placeholder:text-white/30 focus:border-cyan-400/30"
+          className="flex-1 rounded-lg border border-[var(--border-2)] bg-[var(--surface-1)] px-3 py-2 text-sm text-[var(--text-1)] outline-none placeholder:text-[var(--text-4)] focus:border-cyan-400/30"
         />
         <button
           type="submit"
@@ -68,7 +68,7 @@ export function AIAssistantApp() {
             "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors",
             input.trim() && !isPending
               ? "bg-cyan-400/15 text-cyan-300 hover:bg-cyan-400/25"
-              : "text-white/20"
+              : "text-[var(--text-5)]"
           )}
         >
           <Send className="h-4 w-4" />

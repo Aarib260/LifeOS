@@ -19,7 +19,7 @@ const PRIORITY_COLOR: Record<Task["priority"], string> = {
 
 export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
   return (
-    <div className="group flex items-center gap-3 px-3 py-2 hover:bg-white/[0.03]">
+    <div className="group flex items-center gap-3 px-3 py-2 hover:bg-[var(--surface-1)]">
       <button
         type="button"
         onClick={onToggle}
@@ -37,14 +37,14 @@ export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
       <span
         className={cn(
           "min-w-0 flex-1 truncate text-sm",
-          task.isComplete ? "text-white/35 line-through" : "text-white/85"
+          task.isComplete ? "text-[var(--text-4)] line-through" : "text-[var(--text-2)]"
         )}
       >
         {task.title}
       </span>
 
       {task.dueDate && (
-        <span className="shrink-0 text-[11px] text-white/35">
+        <span className="shrink-0 text-[11px] text-[var(--text-4)]">
           {new Date(task.dueDate).toLocaleDateString([], { month: "short", day: "numeric" })}
         </span>
       )}
@@ -53,7 +53,7 @@ export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
         type="button"
         onClick={onDelete}
         aria-label="Delete task"
-        className="shrink-0 rounded-md p-1 text-white/0 transition-colors group-hover:text-white/40 hover:!text-red-400"
+        className="shrink-0 rounded-md p-1 text-white/0 transition-colors group-hover:text-[var(--text-4)] hover:!text-red-400"
       >
         <Trash2 className="h-3.5 w-3.5" />
       </button>

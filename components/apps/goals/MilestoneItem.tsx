@@ -27,7 +27,7 @@ export function MilestoneItem({ milestone, onToggle, onDelete }: MilestoneItemPr
       <span
         className={cn(
           "min-w-0 flex-1 truncate text-xs",
-          milestone.isComplete ? "text-white/35 line-through" : "text-white/70"
+          milestone.isComplete ? "text-[var(--text-4)] line-through" : "text-[var(--text-2)]"
         )}
       >
         {milestone.title}
@@ -36,7 +36,7 @@ export function MilestoneItem({ milestone, onToggle, onDelete }: MilestoneItemPr
         type="button"
         onClick={onDelete}
         aria-label="Delete milestone"
-        className="shrink-0 text-white/0 transition-colors group-hover:text-white/30 hover:!text-red-400"
+        className="shrink-0 text-white/0 transition-colors group-hover:text-[var(--text-4)] hover:!text-red-400"
       >
         <X className="h-3 w-3" />
       </button>

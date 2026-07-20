@@ -29,7 +29,7 @@ export function OSBootSequence({ children }: { children: ReactNode }) {
 
   return (
     <>
-      {phase === "checking" && <div className="fixed inset-0 z-[2000] bg-[#0A0E14]" />}
+      {phase === "checking" && <div className="fixed inset-0 z-[2000] bg-[var(--bg-base)]" />}
 
       <AnimatePresence mode="wait">
         {phase === "booting" && (

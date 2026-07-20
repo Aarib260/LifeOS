@@ -32,36 +32,36 @@ export function GoalCard({
   };
 
   return (
-    <div className="group flex flex-col gap-2.5 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
+    <div className="group flex flex-col gap-2.5 rounded-xl border border-[var(--border-1)] bg-[var(--surface-1)] p-3">
       <div className="flex items-start gap-2">
         <div className="min-w-0 flex-1">
           <span
             className={cn(
               "block truncate text-sm",
-              goal.isComplete ? "text-white/40 line-through" : "text-white/85"
+              goal.isComplete ? "text-[var(--text-4)] line-through" : "text-[var(--text-2)]"
             )}
           >
             {goal.title}
           </span>
           {goal.targetDate && (
-            <span className="text-[11px] text-white/35">
+            <span className="text-[11px] text-[var(--text-4)]">
               Due {new Date(goal.targetDate).toLocaleDateString([], { month: "short", day: "numeric" })}
             </span>
           )}
         </div>
-        <span className="shrink-0 text-xs text-white/50">{goal.progress}%</span>
+        <span className="shrink-0 text-xs text-[var(--text-3)]">{goal.progress}%</span>
         <button
           type="button"
           onClick={onDeleteGoal}
           aria-label="Delete goal"
-          className="shrink-0 rounded-md p-1 text-white/0 transition-colors group-hover:text-white/40 hover:!text-red-400"
+          className="shrink-0 rounded-md p-1 text-white/0 transition-colors group-hover:text-[var(--text-4)] hover:!text-red-400"
         >
           <Trash2 className="h-3.5 w-3.5" />
         </button>
       </div>
 
       {/* Progress bar */}
-      <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--surface-2)]">
         <div
           className="h-full rounded-full bg-cyan-400/70 transition-all"
           style={{ width: `${goal.progress}%` }}
@@ -70,7 +70,7 @@ export function GoalCard({
 
       {/* Milestones */}
       {goal.milestones.length > 0 && (
-        <div className="border-t border-white/[0.05] pt-1.5">
+        <div className="border-t border-[var(--border-1)] pt-1.5">
           {goal.milestones.map((m) => (
             <MilestoneItem
               key={m.id}
@@ -88,14 +88,14 @@ export function GoalCard({
           value={newMilestone}
           onChange={(e) => setNewMilestone(e.target.value)}
           placeholder="Add a milestone..."
-          className="flex-1 rounded-md border border-white/[0.06] bg-white/[0.03] px-2 py-1 text-xs text-white/80 outline-none placeholder:text-white/25 focus:border-cyan-400/30"
+          className="flex-1 rounded-md border border-[var(--border-1)] bg-[var(--surface-1)] px-2 py-1 text-xs text-[var(--text-2)] outline-none placeholder:text-[var(--text-5)] focus:border-cyan-400/30"
         />
         <button
           type="submit"
           disabled={!newMilestone.trim()}
           className={cn(
             "flex h-6 w-6 shrink-0 items-center justify-center rounded-md transition-colors",
-            newMilestone.trim() ? "text-cyan-300 hover:bg-white/[0.06]" : "text-white/15"
+            newMilestone.trim() ? "text-cyan-300 hover:bg-[var(--surface-2)]" : "text-[var(--text-5)]"
           )}
         >
           <Plus className="h-3.5 w-3.5" />

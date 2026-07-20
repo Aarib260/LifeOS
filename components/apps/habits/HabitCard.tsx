@@ -29,15 +29,15 @@ export function HabitCard({ habit, onToggleToday, onDelete }: HabitCardProps) {
   const days = getLastSevenDays();
 
   return (
-    <div className="group flex flex-col gap-2.5 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
+    <div className="group flex flex-col gap-2.5 rounded-xl border border-[var(--border-1)] bg-[var(--surface-1)] p-3">
       <div className="flex items-center gap-2">
         <span
           className="h-2.5 w-2.5 shrink-0 rounded-full"
           style={{ backgroundColor: habit.color }}
         />
-        <span className="min-w-0 flex-1 truncate text-sm text-white/85">{habit.name}</span>
+        <span className="min-w-0 flex-1 truncate text-sm text-[var(--text-2)]">{habit.name}</span>
 
-        <div className="flex items-center gap-1 text-xs text-white/50">
+        <div className="flex items-center gap-1 text-xs text-[var(--text-3)]">
           <Flame className={cn("h-3.5 w-3.5", habit.currentStreak > 0 && "text-amber-400")} />
           {habit.currentStreak}
         </div>
@@ -46,7 +46,7 @@ export function HabitCard({ habit, onToggleToday, onDelete }: HabitCardProps) {
           type="button"
           onClick={onDelete}
           aria-label="Delete habit"
-          className="rounded-md p-1 text-white/0 transition-colors group-hover:text-white/40 hover:!text-red-400"
+          className="rounded-md p-1 text-white/0 transition-colors group-hover:text-[var(--text-4)] hover:!text-red-400"
         >
           <Trash2 className="h-3.5 w-3.5" />
         </button>
@@ -65,7 +65,7 @@ export function HabitCard({ habit, onToggleToday, onDelete }: HabitCardProps) {
                 title={dateStr}
                 className={cn(
                   "h-2 w-2 rounded-full",
-                  !isScheduled && "bg-white/[0.06]",
+                  !isScheduled && "bg-[var(--surface-2)]",
                   isScheduled && isLogged && "",
                   isScheduled && !isLogged && "border border-white/20"
                 )}
@@ -82,7 +82,7 @@ export function HabitCard({ habit, onToggleToday, onDelete }: HabitCardProps) {
             "rounded-lg px-3 py-1 text-xs font-medium transition-colors",
             habit.completedToday
               ? "bg-cyan-400/20 text-cyan-200"
-              : "bg-white/[0.06] text-white/60 hover:bg-white/[0.1]"
+              : "bg-[var(--surface-2)] text-[var(--text-3)] hover:bg-[var(--surface-3)]"
           )}
         >
           {habit.completedToday ? "Done today" : "Check in"}

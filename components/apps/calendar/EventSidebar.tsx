@@ -32,11 +32,11 @@ export function EventSidebar({
     .slice(0, 8);
 
   return (
-    <div className="flex h-full w-56 shrink-0 flex-col border-l border-white/[0.06]">
+    <div className="flex h-full w-56 shrink-0 flex-col border-l border-[var(--border-1)]">
       <EventComposer selectedDate={selectedDate} onAdd={onAdd} isPending={isPending} />
 
       <div className="flex-1 overflow-y-auto p-3">
-        {isLoading && <p className="text-center text-xs text-white/30">Loading...</p>}
+        {isLoading && <p className="text-center text-xs text-[var(--text-4)]">Loading...</p>}
         {isError && (
           <p className="text-center text-xs text-red-300/70">Couldn&apos;t load events.</p>
         )}
@@ -45,7 +45,7 @@ export function EventSidebar({
           <>
             {selectedDayEvents.length > 0 && (
               <div className="mb-3">
-                <p className="mb-1 text-[11px] font-medium uppercase tracking-wide text-white/30">
+                <p className="mb-1 text-[11px] font-medium uppercase tracking-wide text-[var(--text-4)]">
                   {new Date(selectedDate).toLocaleDateString([], { month: "short", day: "numeric" })}
                 </p>
                 {selectedDayEvents.map((event) => (
@@ -55,11 +55,11 @@ export function EventSidebar({
             )}
 
             <div>
-              <p className="mb-1 text-[11px] font-medium uppercase tracking-wide text-white/30">
+              <p className="mb-1 text-[11px] font-medium uppercase tracking-wide text-[var(--text-4)]">
                 Upcoming
               </p>
               {upcoming.length === 0 ? (
-                <p className="text-xs text-white/25">Nothing scheduled.</p>
+                <p className="text-xs text-[var(--text-5)]">Nothing scheduled.</p>
               ) : (
                 upcoming.map((event) => (
                   <EventItem key={event.id} event={event} onDelete={() => onDelete(event.id)} showDate />

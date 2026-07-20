@@ -1,3 +1,4 @@
+-- Run against your Neon Postgres database, same as the previous migrations.
 
 CREATE TABLE IF NOT EXISTS users (
   id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),

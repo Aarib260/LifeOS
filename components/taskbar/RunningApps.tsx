@@ -44,7 +44,7 @@ export function RunningApps() {
               "relative flex h-10 w-10 items-center justify-center rounded-lg transition-colors",
               isFocused
                 ? "bg-white/10 text-cyan-300"
-                : "text-white/60 hover:bg-white/10 hover:text-white/90"
+                : "text-[var(--text-3)] hover:bg-white/10 hover:text-[var(--text-1)]"
             )}
           >
             {Icon && <Icon className="h-5 w-5" />}

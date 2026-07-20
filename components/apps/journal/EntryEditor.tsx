@@ -59,19 +59,19 @@ export function EntryEditor({ entry, onSave, onDelete }: EntryEditorProps) {
 
   return (
     <div className="flex h-full flex-1 flex-col">
-      <div className="flex items-center gap-2 border-b border-white/[0.06] p-3">
+      <div className="flex items-center gap-2 border-b border-[var(--border-1)] p-3">
         <input
           type="text"
           value={title}
           onChange={(e) => handleTitleChange(e.target.value)}
           placeholder="Untitled"
-          className="flex-1 bg-transparent text-sm font-medium text-white/90 outline-none placeholder:text-white/30"
+          className="flex-1 bg-transparent text-sm font-medium text-[var(--text-1)] outline-none placeholder:text-[var(--text-4)]"
         />
         <button
           type="button"
           onClick={onDelete}
           aria-label="Delete entry"
-          className="rounded-md p-1 text-white/40 transition-colors hover:text-red-400"
+          className="rounded-md p-1 text-[var(--text-4)] transition-colors hover:text-red-400"
         >
           <Trash2 className="h-3.5 w-3.5" />
         </button>
@@ -83,7 +83,7 @@ export function EntryEditor({ entry, onSave, onDelete }: EntryEditorProps) {
         <EditorContent
           editor={editor}
           className={[
-            "text-sm text-white/85",
+            "text-sm text-[var(--text-2)]",
             "[&_.ProseMirror]:outline-none",
             "[&_ul]:list-disc [&_ul]:pl-5",
             "[&_ol]:list-decimal [&_ol]:pl-5",

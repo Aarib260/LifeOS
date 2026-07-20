@@ -6,7 +6,7 @@ import { LandingFooter } from "./LandingFooter";
 
 export function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#0A0E14]">
+    <div className="min-h-screen bg-[var(--landing-bg)]">
       <LandingNav />
       <Hero />
       <FeatureGrid />

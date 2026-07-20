@@ -32,14 +32,14 @@ export function HabitComposer({ onAdd, isPending }: HabitComposerProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2 border-b border-white/[0.06] p-3">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 border-b border-[var(--border-1)] p-3">
       <div className="flex items-center gap-2">
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Add a habit..."
-          className="flex-1 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-white/90 outline-none placeholder:text-white/30 focus:border-cyan-400/30"
+          className="flex-1 rounded-lg border border-[var(--border-2)] bg-[var(--surface-1)] px-3 py-2 text-sm text-[var(--text-1)] outline-none placeholder:text-[var(--text-4)] focus:border-cyan-400/30"
         />
         <button
           type="submit"
@@ -48,7 +48,7 @@ export function HabitComposer({ onAdd, isPending }: HabitComposerProps) {
             "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors",
             name.trim() && targetDays.length > 0 && !isPending
               ? "bg-cyan-400/15 text-cyan-300 hover:bg-cyan-400/25"
-              : "text-white/20"
+              : "text-[var(--text-5)]"
           )}
         >
           <Plus className="h-4 w-4" />
@@ -82,7 +82,7 @@ export function HabitComposer({ onAdd, isPending }: HabitComposerProps) {
                 "flex h-6 w-6 items-center justify-center rounded-md text-[10px] font-medium transition-colors",
                 targetDays.includes(day)
                   ? "bg-cyan-400/20 text-cyan-200"
-                  : "bg-white/[0.04] text-white/30"
+                  : "bg-[var(--surface-1)] text-[var(--text-4)]"
               )}
             >
               {label}

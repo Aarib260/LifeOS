@@ -60,7 +60,7 @@ export function JournalApp() {
             type="button"
             onClick={() => setIsDrawerOpen(true)}
             aria-label="Open entry list"
-            className="absolute left-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-md text-white/50 hover:bg-white/[0.06] hover:text-white/85"
+            className="absolute left-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-md text-[var(--text-3)] hover:bg-[var(--surface-2)] hover:text-[var(--text-2)]"
           >
             <Menu className="h-4 w-4" />
           </button>
@@ -74,7 +74,7 @@ export function JournalApp() {
             onDelete={() => handleDelete(selectedEntry.id)}
           />
         ) : (
-          <div className="flex flex-1 items-center justify-center text-xs text-white/30">
+          <div className="flex flex-1 items-center justify-center text-xs text-[var(--text-4)]">
             Select an entry or create a new one.
           </div>
         )}
@@ -98,12 +98,12 @@ export function JournalApp() {
                 exit={{ x: "-100%" }}
                 transition={{ type: "spring", stiffness: 340, damping: 32 }}
               >
-                <div className="relative h-full bg-[#12161F]">
+                <div className="relative h-full bg-[var(--bg-panel)]">
                   <button
                     type="button"
                     onClick={() => setIsDrawerOpen(false)}
                     aria-label="Close entry list"
-                    className="absolute -right-8 top-2 flex h-7 w-7 items-center justify-center rounded-md bg-[#12161F] text-white/60 hover:text-white/90"
+                    className="absolute -right-8 top-2 flex h-7 w-7 items-center justify-center rounded-md bg-[var(--bg-panel)] text-[var(--text-3)] hover:text-[var(--text-1)]"
                   >
                     <X className="h-4 w-4" />
                   </button>

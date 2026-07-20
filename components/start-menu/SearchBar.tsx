@@ -9,15 +9,15 @@ interface SearchBarProps {
 
 export function SearchBar({ value, onChange }: SearchBarProps) {
   return (
-    <div className="flex items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5">
-      <Search className="h-4 w-4 text-white/40" />
+    <div className="flex items-center gap-2 rounded-lg border border-[var(--border-2)] bg-[var(--surface-1)] px-3 py-2.5">
+      <Search className="h-4 w-4 text-[var(--text-4)]" />
       <input
         autoFocus
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Search apps..."
-        className="w-full bg-transparent text-sm text-white/90 outline-none placeholder:text-white/30"
+        className="w-full bg-transparent text-sm text-[var(--text-1)] outline-none placeholder:text-[var(--text-4)]"
       />
     </div>
   );

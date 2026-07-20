@@ -15,7 +15,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-5xl font-extrabold tracking-tight text-[#F4EEE2] sm:text-6xl"
+          className="text-5xl font-extrabold tracking-tight text-[var(--landing-heading)] sm:text-6xl"
         >
           Build good.
           <br />
@@ -26,7 +26,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mx-auto mt-5 max-w-xl text-sm text-white/50 sm:text-base"
+          className="mx-auto mt-5 max-w-xl text-sm text-[var(--text-3)] sm:text-base"
         >
           Tasks, habits, goals, calendar, journal, and an AI assistant — all living
           inside a browser-based desktop that feels like a real OS, not another dashboard.
@@ -40,13 +40,13 @@ export function Hero() {
         >
           <Link
             href="/signup"
-            className="rounded-full bg-[#EA7C5C] px-6 py-3 text-sm font-semibold text-[#0A0E14] transition-colors hover:bg-[#F0906F]"
+            className="rounded-full bg-[var(--landing-accent)] px-6 py-3 text-sm font-semibold text-[var(--landing-accent-text)] transition-colors hover:bg-[var(--landing-accent-hover)]"
           >
             Start for free
           </Link>
           <Link
             href="#features"
-            className="rounded-full border border-white/[0.12] bg-white/[0.04] px-6 py-3 text-sm font-medium text-white/70 transition-colors hover:bg-white/[0.08]"
+            className="rounded-full border border-[var(--border-3)] bg-[var(--surface-1)] px-6 py-3 text-sm font-medium text-[var(--text-2)] transition-colors hover:bg-[var(--surface-3)]"
           >
             Features
           </Link>

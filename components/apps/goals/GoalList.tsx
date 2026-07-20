@@ -23,7 +23,7 @@ export function GoalList({
   onDeleteGoal,
 }: GoalListProps) {
   if (isLoading) {
-    return <p className="p-6 text-center text-xs text-white/30">Loading goals...</p>;
+    return <p className="p-6 text-center text-xs text-[var(--text-4)]">Loading goals...</p>;
   }
 
   if (isError) {
@@ -35,7 +35,7 @@ export function GoalList({
   }
 
   if (goals.length === 0) {
-    return <p className="p-6 text-center text-xs text-white/30">No goals yet — add one above.</p>;
+    return <p className="p-6 text-center text-xs text-[var(--text-4)]">No goals yet — add one above.</p>;
   }
 
   return (

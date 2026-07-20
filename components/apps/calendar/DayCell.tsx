@@ -24,7 +24,7 @@ export function DayCell({ date, isCurrentMonth, isToday, isSelected, events, onC
       onClick={onClick}
       className={cn(
         "flex flex-col items-start gap-0.5 rounded-lg p-1.5 text-left transition-colors",
-        "hover:bg-white/[0.05]",
+        "hover:bg-[var(--surface-2)]",
         isSelected && "bg-cyan-400/[0.08] ring-1 ring-cyan-400/30",
         !isCurrentMonth && "opacity-30"
       )}
@@ -32,7 +32,7 @@ export function DayCell({ date, isCurrentMonth, isToday, isSelected, events, onC
       <span
         className={cn(
           "flex h-5 w-5 items-center justify-center rounded-full text-[11px]",
-          isToday ? "bg-cyan-400/80 font-medium text-[var(--bg-base)]" : "text-white/70"
+          isToday ? "bg-cyan-400/80 font-medium text-[#0A0E14]" : "text-[var(--text-2)]"
         )}
       >
         {date.getDate()}
@@ -48,7 +48,7 @@ export function DayCell({ date, isCurrentMonth, isToday, isSelected, events, onC
             />
           ))}
           {overflowCount > 0 && (
-            <span className="text-[9px] leading-none text-white/40">+{overflowCount}</span>
+            <span className="text-[9px] leading-none text-[var(--text-4)]">+{overflowCount}</span>
           )}
         </div>
       )}

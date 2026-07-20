@@ -21,13 +21,13 @@ export function TaskComposer({ onAdd, isPending }: TaskComposerProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2 p-3 border-b border-white/[0.06]">
+    <form onSubmit={handleSubmit} className="flex items-center gap-2 p-3 border-b border-[var(--border-1)]">
       <input
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Add a task..."
-        className="flex-1 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-white/90 outline-none placeholder:text-white/30 focus:border-cyan-400/30"
+        className="flex-1 rounded-lg border border-[var(--border-2)] bg-[var(--surface-1)] px-3 py-2 text-sm text-[var(--text-1)] outline-none placeholder:text-[var(--text-4)] focus:border-cyan-400/30"
       />
       <button
         type="submit"
@@ -36,7 +36,7 @@ export function TaskComposer({ onAdd, isPending }: TaskComposerProps) {
           "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors",
           value.trim() && !isPending
             ? "bg-cyan-400/15 text-cyan-300 hover:bg-cyan-400/25"
-            : "text-white/20"
+            : "text-[var(--text-5)]"
         )}
       >
         <Plus className="h-4 w-4" />

@@ -82,7 +82,7 @@ export function CalendarApp() {
             type="button"
             onClick={() => setIsDrawerOpen(true)}
             aria-label="Open events panel"
-            className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-md text-white/50 hover:bg-white/[0.06] hover:text-white/85"
+            className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-md text-[var(--text-3)] hover:bg-[var(--surface-2)] hover:text-[var(--text-2)]"
           >
             <CalendarClock className="h-4 w-4" />
           </button>
@@ -109,12 +109,12 @@ export function CalendarApp() {
                 exit={{ x: "100%" }}
                 transition={{ type: "spring", stiffness: 340, damping: 32 }}
               >
-                <div className="relative h-full bg-[#12161F]">
+                <div className="relative h-full bg-[var(--bg-panel)]">
                   <button
                     type="button"
                     onClick={() => setIsDrawerOpen(false)}
                     aria-label="Close events panel"
-                    className="absolute -left-8 top-2 flex h-7 w-7 items-center justify-center rounded-md bg-[#12161F] text-white/60 hover:text-white/90"
+                    className="absolute -left-8 top-2 flex h-7 w-7 items-center justify-center rounded-md bg-[var(--bg-panel)] text-[var(--text-3)] hover:text-[var(--text-1)]"
                   >
                     <X className="h-4 w-4" />
                   </button>

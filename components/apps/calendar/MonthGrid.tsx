@@ -43,7 +43,7 @@ export function MonthGrid({
   return (
     <div className="flex h-full flex-col p-3">
       <div className="mb-2 flex items-center justify-between">
-        <span className="text-sm font-medium text-white/85">
+        <span className="text-sm font-medium text-[var(--text-2)]">
           {MONTH_NAMES[month]} {year}
         </span>
         <div className="flex gap-1">
@@ -51,7 +51,7 @@ export function MonthGrid({
             type="button"
             onClick={onPrevMonth}
             aria-label="Previous month"
-            className="rounded-md p-1 text-white/50 hover:bg-white/[0.06] hover:text-white/85"
+            className="rounded-md p-1 text-[var(--text-3)] hover:bg-[var(--surface-2)] hover:text-[var(--text-2)]"
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
@@ -59,7 +59,7 @@ export function MonthGrid({
             type="button"
             onClick={onNextMonth}
             aria-label="Next month"
-            className="rounded-md p-1 text-white/50 hover:bg-white/[0.06] hover:text-white/85"
+            className="rounded-md p-1 text-[var(--text-3)] hover:bg-[var(--surface-2)] hover:text-[var(--text-2)]"
           >
             <ChevronRight className="h-4 w-4" />
           </button>
@@ -68,7 +68,7 @@ export function MonthGrid({
 
       <div className="mb-1 grid grid-cols-7 gap-1">
         {WEEKDAY_LABELS.map((label) => (
-          <span key={label} className="text-center text-[10px] font-medium text-white/30">
+          <span key={label} className="text-center text-[10px] font-medium text-[var(--text-4)]">
             {label}
           </span>
         ))}

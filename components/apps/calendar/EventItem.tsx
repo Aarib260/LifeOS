@@ -18,8 +18,8 @@ export function EventItem({ event, onDelete, showDate }: EventItemProps) {
         style={{ backgroundColor: event.color }}
       />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-xs text-white/80">{event.title}</p>
-        <p className="text-[10px] text-white/35">
+        <p className="truncate text-xs text-[var(--text-2)]">{event.title}</p>
+        <p className="text-[10px] text-[var(--text-4)]">
           {showDate &&
             new Date(event.eventDate).toLocaleDateString([], { month: "short", day: "numeric" })}
           {showDate && event.startTime && " · "}
@@ -30,7 +30,7 @@ export function EventItem({ event, onDelete, showDate }: EventItemProps) {
         type="button"
         onClick={onDelete}
         aria-label="Delete event"
-        className="shrink-0 text-white/0 transition-colors group-hover:text-white/30 hover:!text-red-400"
+        className="shrink-0 text-white/0 transition-colors group-hover:text-[var(--text-4)] hover:!text-red-400"
       >
         <X className="h-3 w-3" />
       </button>

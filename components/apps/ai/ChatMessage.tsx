@@ -15,7 +15,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
           "max-w-[85%] rounded-xl px-3 py-2 text-sm leading-relaxed",
           isUser
             ? "bg-cyan-400/15 text-cyan-100"
-            : "bg-white/[0.05] text-white/85"
+            : "bg-[var(--surface-2)] text-[var(--text-2)]"
         )}
       >
         {message.content}

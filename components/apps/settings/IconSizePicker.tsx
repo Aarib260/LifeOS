@@ -26,13 +26,13 @@ export function IconSizePicker() {
               "flex flex-1 flex-col items-center gap-1.5 rounded-lg border p-2.5 transition-colors",
               isActive
                 ? "border-cyan-400/50 bg-cyan-400/[0.08]"
-                : "border-white/[0.08] hover:bg-white/[0.04]"
+                : "border-[var(--border-2)] hover:bg-[var(--surface-1)]"
             )}
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-white/[0.06]">
+            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[var(--surface-2)]">
               <div className={cn("rounded-sm bg-cyan-300/80", option.previewSize)} />
             </div>
-            <span className="text-[11px] text-white/60">{option.label}</span>
+            <span className="text-[11px] text-[var(--text-3)]">{option.label}</span>
           </button>
         );
       })}

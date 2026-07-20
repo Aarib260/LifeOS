@@ -44,7 +44,7 @@ export function LockScreen({ onUnlock }: LockScreenProps) {
         <span className="text-6xl font-light tracking-tight text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]">
           {time}
         </span>
-        <span className="text-sm text-white/60">{date}</span>
+        <span className="text-sm text-[var(--text-3)]">{date}</span>
       </motion.div>
 
       <motion.div
@@ -56,8 +56,8 @@ export function LockScreen({ onUnlock }: LockScreenProps) {
         <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-gradient-to-br from-cyan-400/30 to-indigo-400/30 text-xl font-medium text-white">
           {name[0]?.toUpperCase()}
         </div>
-        <span className="text-sm text-white/80">{name}</span>
-        <span className="text-xs text-white/40">Click anywhere or press any key to unlock</span>
+        <span className="text-sm text-[var(--text-2)]">{name}</span>
+        <span className="text-xs text-[var(--text-4)]">Click anywhere or press any key to unlock</span>
       </motion.div>
     </div>
   );

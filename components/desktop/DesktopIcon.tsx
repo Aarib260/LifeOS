@@ -48,8 +48,8 @@ export function DesktopIcon({ label, icon: Icon, onOpen, className }: DesktopIco
         className={cn(
           "flex items-center justify-center",
           sizes.tile,
-          "bg-white/[0.06] border border-white/[0.08] backdrop-blur-sm",
-          "group-hover:border-cyan-400/30 group-hover:bg-white/[0.09] transition-colors"
+          "bg-[var(--surface-2)] border border-[var(--border-2)] backdrop-blur-sm",
+          "group-hover:border-cyan-400/30 group-hover:bg-[var(--surface-3)] transition-colors"
         )}
       >
         <Icon className={cn(sizes.icon, "text-cyan-100/90")} />
@@ -57,7 +57,7 @@ export function DesktopIcon({ label, icon: Icon, onOpen, className }: DesktopIco
       <span
         className={cn(
           sizes.label,
-          "leading-tight text-white/80 text-center line-clamp-2 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]"
+          "leading-tight text-[var(--text-2)] text-center line-clamp-2 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]"
         )}
       >
         {label}

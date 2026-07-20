@@ -19,7 +19,7 @@ export function StartButton({ isActive, onClick }: StartButtonProps) {
         "flex h-10 w-10 items-center justify-center rounded-lg transition-colors",
         isActive
           ? "bg-cyan-400/15 text-cyan-300"
-          : "text-white/70 hover:bg-white/10 hover:text-white"
+          : "text-[var(--text-2)] hover:bg-white/10 hover:text-white"
       )}
     >
       <Grid2x2 className="h-5 w-5" />

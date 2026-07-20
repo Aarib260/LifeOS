@@ -63,18 +63,18 @@ export function WallpaperPicker() {
               <div
                 className={cn(
                   "relative flex h-12 w-full items-center justify-center overflow-hidden rounded-lg border-2 bg-cover bg-center",
-                  isActive ? "border-cyan-400/70" : "border-white/[0.08]"
+                  isActive ? "border-cyan-400/70" : "border-[var(--border-2)]"
                 )}
                 style={{
                   background:
                     preset.kind === "photo"
                       ? `url(${preset.thumbnailUrl}) center/cover`
-                      : `linear-gradient(135deg, ${preset.colors?.[0]} 0%, var(--bg-base) 45%, ${preset.colors?.[1]} 100%)`,
+                      : `linear-gradient(135deg, ${preset.colors?.[0]} 0%, #0A0E14 45%, ${preset.colors?.[1]} 100%)`,
                 }}
               >
                 {isActive && <Check className="h-4 w-4 text-white drop-shadow" />}
               </div>
-              <span className="text-[11px] text-white/60">{preset.label}</span>
+              <span className="text-[11px] text-[var(--text-3)]">{preset.label}</span>
             </button>
           );
         })}
@@ -101,10 +101,10 @@ export function WallpaperPicker() {
             {wallpaperId === CUSTOM_WALLPAPER_ID && customWallpaperDataUrl ? (
               <Check className="h-4 w-4 text-white drop-shadow" />
             ) : (
-              <Upload className="h-4 w-4 text-white/40" />
+              <Upload className="h-4 w-4 text-[var(--text-4)]" />
             )}
           </div>
-          <span className="text-[11px] text-white/60">Upload</span>
+          <span className="text-[11px] text-[var(--text-3)]">Upload</span>
         </button>
       </div>
 

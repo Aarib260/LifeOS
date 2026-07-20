@@ -15,7 +15,7 @@ export function RecentApps({ onLaunch }: RecentAppsProps) {
 
   return (
     <div className="mb-3">
-      <p className="mb-1.5 px-1 text-[11px] font-medium uppercase tracking-wide text-white/40">
+      <p className="mb-1.5 px-1 text-[11px] font-medium uppercase tracking-wide text-[var(--text-4)]">
         Recent
       </p>
       <div className="flex gap-1">
@@ -29,7 +29,7 @@ export function RecentApps({ onLaunch }: RecentAppsProps) {
               type="button"
               title={meta.title}
               onClick={() => onLaunch(appId)}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.04] text-cyan-100/80 transition-colors hover:bg-white/[0.08]"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-1)] bg-[var(--surface-1)] text-cyan-100/80 transition-colors hover:bg-[var(--surface-3)]"
             >
               <Icon className="h-4 w-4" />
             </button>

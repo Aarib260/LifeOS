@@ -20,8 +20,8 @@ function stripHtml(html: string): string {
 
 export function EntryList({ entries, selectedId, onSelect, onNew, isLoading, isError }: EntryListProps) {
   return (
-    <div className="flex h-full w-48 shrink-0 flex-col border-r border-white/[0.06]">
-      <div className="border-b border-white/[0.06] p-2">
+    <div className="flex h-full w-48 shrink-0 flex-col border-r border-[var(--border-1)]">
+      <div className="border-b border-[var(--border-1)] p-2">
         <button
           type="button"
           onClick={onNew}
@@ -33,10 +33,10 @@ export function EntryList({ entries, selectedId, onSelect, onNew, isLoading, isE
       </div>
 
       <div className="flex-1 overflow-y-auto">
-        {isLoading && <p className="p-3 text-center text-xs text-white/30">Loading...</p>}
+        {isLoading && <p className="p-3 text-center text-xs text-[var(--text-4)]">Loading...</p>}
         {isError && <p className="p-3 text-center text-xs text-red-300/70">Couldn&apos;t load.</p>}
         {!isLoading && !isError && entries.length === 0 && (
-          <p className="p-3 text-center text-xs text-white/30">No entries yet.</p>
+          <p className="p-3 text-center text-xs text-[var(--text-4)]">No entries yet.</p>
         )}
 
         {entries.map((entry) => {
@@ -47,18 +47,18 @@ export function EntryList({ entries, selectedId, onSelect, onNew, isLoading, isE
               type="button"
               onClick={() => onSelect(entry.id)}
               className={cn(
-                "flex w-full flex-col items-start gap-0.5 border-b border-white/[0.04] px-3 py-2 text-left transition-colors hover:bg-white/[0.04]",
+                "flex w-full flex-col items-start gap-0.5 border-b border-[var(--border-1)] px-3 py-2 text-left transition-colors hover:bg-[var(--surface-1)]",
                 selectedId === entry.id && "bg-cyan-400/[0.08]"
               )}
             >
-              <span className="text-[10px] text-white/35">
+              <span className="text-[10px] text-[var(--text-4)]">
                 {new Date(entry.entryDate).toLocaleDateString([], { month: "short", day: "numeric" })}
               </span>
-              <span className="w-full truncate text-xs text-white/85">
+              <span className="w-full truncate text-xs text-[var(--text-2)]">
                 {entry.title || "Untitled"}
               </span>
               {preview && (
-                <span className="line-clamp-1 w-full text-[11px] text-white/35">{preview}</span>
+                <span className="line-clamp-1 w-full text-[11px] text-[var(--text-4)]">{preview}</span>
               )}
             </button>
           );

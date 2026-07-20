@@ -14,9 +14,9 @@ interface TaskbarProps {
 }
 
 const GLASS_CLASSES: Record<GlassIntensity, string> = {
-  subtle: "backdrop-blur-md bg-[#0D1117]/95",
-  medium: "backdrop-blur-xl bg-[#0D1117]/80",
-  strong: "backdrop-blur-2xl bg-[#0D1117]/55",
+  subtle: "backdrop-blur-md bg-[var(--bg-taskbar-95)]",
+  medium: "backdrop-blur-xl bg-[var(--bg-taskbar-80)]",
+  strong: "backdrop-blur-2xl bg-[var(--bg-taskbar-55)]",
 };
 
 export function Taskbar({ isStartMenuOpen, onToggleStartMenu }: TaskbarProps) {
@@ -25,7 +25,7 @@ export function Taskbar({ isStartMenuOpen, onToggleStartMenu }: TaskbarProps) {
   return (
     <div
       className={cn(
-        "fixed bottom-0 left-0 right-0 flex items-center justify-between border-t border-white/[0.06] px-3",
+        "fixed bottom-0 left-0 right-0 flex items-center justify-between border-t border-[var(--border-1)] px-3",
         GLASS_CLASSES[taskbarGlass]
       )}
       style={{ height: TASKBAR_HEIGHT, zIndex: TASKBAR_Z }}

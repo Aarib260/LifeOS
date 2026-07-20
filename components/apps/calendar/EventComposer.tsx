@@ -40,13 +40,13 @@ export function EventComposer({ selectedDate, onAdd, isPending }: EventComposerP
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2 border-b border-white/[0.06] p-3">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 border-b border-[var(--border-1)] p-3">
       <input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Add an event..."
-        className="rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-white/90 outline-none placeholder:text-white/30 focus:border-cyan-400/30"
+        className="rounded-lg border border-[var(--border-2)] bg-[var(--surface-1)] px-3 py-2 text-sm text-[var(--text-1)] outline-none placeholder:text-[var(--text-4)] focus:border-cyan-400/30"
       />
 
       <div className="flex items-center gap-1.5">
@@ -54,13 +54,13 @@ export function EventComposer({ selectedDate, onAdd, isPending }: EventComposerP
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="min-w-0 flex-1 rounded-md border border-white/[0.08] bg-white/[0.04] px-2 py-1.5 text-xs text-white/70 outline-none focus:border-cyan-400/30 [color-scheme:dark]"
+          className="min-w-0 flex-1 rounded-md border border-[var(--border-2)] bg-[var(--surface-1)] px-2 py-1.5 text-xs text-[var(--text-2)] outline-none focus:border-cyan-400/30 [color-scheme:dark]"
         />
         <input
           type="time"
           value={startTime}
           onChange={(e) => setStartTime(e.target.value)}
-          className="min-w-0 flex-1 rounded-md border border-white/[0.08] bg-white/[0.04] px-2 py-1.5 text-xs text-white/70 outline-none focus:border-cyan-400/30 [color-scheme:dark]"
+          className="min-w-0 flex-1 rounded-md border border-[var(--border-2)] bg-[var(--surface-1)] px-2 py-1.5 text-xs text-[var(--text-2)] outline-none focus:border-cyan-400/30 [color-scheme:dark]"
         />
       </div>
 
@@ -88,7 +88,7 @@ export function EventComposer({ selectedDate, onAdd, isPending }: EventComposerP
             "flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium transition-colors",
             title.trim() && !isPending
               ? "bg-cyan-400/15 text-cyan-300 hover:bg-cyan-400/25"
-              : "text-white/20"
+              : "text-[var(--text-5)]"
           )}
         >
           <Plus className="h-3.5 w-3.5" />

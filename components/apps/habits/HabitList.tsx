@@ -13,7 +13,7 @@ interface HabitListProps {
 
 export function HabitList({ habits, isLoading, isError, onToggleToday, onDelete }: HabitListProps) {
   if (isLoading) {
-    return <p className="p-6 text-center text-xs text-white/30">Loading habits...</p>;
+    return <p className="p-6 text-center text-xs text-[var(--text-4)]">Loading habits...</p>;
   }
 
   if (isError) {
@@ -25,7 +25,7 @@ export function HabitList({ habits, isLoading, isError, onToggleToday, onDelete 
   }
 
   if (habits.length === 0) {
-    return <p className="p-6 text-center text-xs text-white/30">No habits yet — add one above.</p>;
+    return <p className="p-6 text-center text-xs text-[var(--text-4)]">No habits yet — add one above.</p>;
   }
 
   return (
