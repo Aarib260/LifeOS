@@ -302,6 +302,9 @@ max-width:640px;
   --landing-accent: #ea7c5c;
   --landing-accent-hover: #f0906f;
   --landing-accent-text: #0a0e14;
+
+  /* App icon color — pale cyan reads well on dark, but needs to darken in light mode */
+  --icon-accent: rgba(224, 242, 254, 0.9);
 }
 
 [data-theme="light"] {
@@ -337,4 +340,8 @@ max-width:640px;
   --landing-accent: #b8865b;
   --landing-accent-hover: #a6754b;
   --landing-accent-text: #ffffff;
+
+  /* Solid near-black instead of cyan — a darker cyan (#0e7490) still wasn't
+     strong enough contrast against light backgrounds. */
+  --icon-accent: rgba(20, 20, 22, 0.88);
 }

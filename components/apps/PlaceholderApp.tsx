@@ -17,8 +17,8 @@ export function PlaceholderApp({ icon: Icon, title, description }: PlaceholderAp
       <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.06]">
         <Icon className="h-7 w-7 text-cyan-300/90" />
       </div>
-      <h2 className="text-sm font-medium text-white/90">{title}</h2>
-      <p className="max-w-xs text-xs leading-relaxed text-white/40">{description}</p>
+      <h2 className="text-sm font-medium text-[var(--text-1)]">{title}</h2>
+      <p className="max-w-xs text-xs leading-relaxed text-[var(--text-4)]">{description}</p>
     </div>
   );
 }
