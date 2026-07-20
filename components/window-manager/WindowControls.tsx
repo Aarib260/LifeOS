@@ -19,7 +19,7 @@ export function WindowControls({ onMinimize, onMaximize, onClose }: WindowContro
         onClick={onMinimize}
         className={cn(
           "flex h-7 w-9 items-center justify-center rounded-md text-[var(--text-3)]",
-          "hover:bg-white/10 hover:text-[var(--text-1)] transition-colors"
+          "hover:bg-[var(--surface-3)] hover:text-[var(--text-1)] transition-colors"
         )}
       >
         <Minus className="h-3.5 w-3.5" />
@@ -30,7 +30,7 @@ export function WindowControls({ onMinimize, onMaximize, onClose }: WindowContro
         onClick={onMaximize}
         className={cn(
           "flex h-7 w-9 items-center justify-center rounded-md text-[var(--text-3)]",
-          "hover:bg-white/10 hover:text-[var(--text-1)] transition-colors"
+          "hover:bg-[var(--surface-3)] hover:text-[var(--text-1)] transition-colors"
         )}
       >
         <Square className="h-3 w-3" />

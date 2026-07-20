@@ -21,7 +21,7 @@ export function MilestoneItem({ milestone, onToggle, onDelete }: MilestoneItemPr
           "flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded border transition-colors",
           milestone.isComplete
             ? "border-cyan-400/60 bg-cyan-400/60"
-            : "border-white/25 hover:border-cyan-400/50"
+            : "border-[var(--border-3)] hover:border-cyan-400/50"
         )}
       />
       <span

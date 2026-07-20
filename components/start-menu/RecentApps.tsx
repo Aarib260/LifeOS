@@ -29,7 +29,7 @@ export function RecentApps({ onLaunch }: RecentAppsProps) {
               type="button"
               title={meta.title}
               onClick={() => onLaunch(appId)}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-1)] bg-[var(--surface-1)] text-cyan-100/80 transition-colors hover:bg-[var(--surface-3)]"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-1)] bg-[var(--surface-1)] text-[var(--icon-accent)] transition-colors hover:bg-[var(--surface-3)]"
             >
               <Icon className="h-4 w-4" />
             </button>

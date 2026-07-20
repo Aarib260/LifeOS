@@ -26,7 +26,7 @@ export function AppGrid({ apps, onLaunch }: AppGridProps) {
             className="flex flex-col items-center gap-1.5 rounded-lg p-2.5 text-center transition-colors hover:bg-[var(--surface-2)]"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border-2)] bg-[var(--surface-2)]">
-              <Icon className="h-5 w-5 text-cyan-100/90" />
+              <Icon className="h-5 w-5 text-[var(--icon-accent)]" />
             </div>
             <span className="line-clamp-2 text-[11px] leading-tight text-[var(--text-2)]">
               {app.title}

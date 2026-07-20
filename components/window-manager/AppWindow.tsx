@@ -102,7 +102,7 @@ export function AppWindow({ window: win, isFocused, children }: AppWindowProps) 
           className={cn(
             "absolute bottom-0 right-0 h-4 w-4 cursor-nwse-resize touch-none",
             "before:absolute before:bottom-1 before:right-1 before:h-2 before:w-2",
-            "before:border-b-2 before:border-r-2 before:border-white/20 before:rounded-br-sm"
+            "before:border-b-2 before:border-r-2 before:border-[var(--border-3)] before:rounded-br-sm"
           )}
         />
       )}

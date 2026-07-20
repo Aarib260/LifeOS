@@ -40,7 +40,7 @@ export function DesktopIcon({ label, icon: Icon, onOpen, className }: DesktopIco
         "group flex flex-col items-center gap-1.5 rounded-lg p-2",
         sizes.wrapper,
         "outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/70",
-        "hover:bg-white/5 active:bg-white/10 transition-colors",
+        "hover:bg-[var(--surface-1)] active:bg-[var(--surface-3)] transition-colors",
         className
       )}
     >
@@ -52,7 +52,7 @@ export function DesktopIcon({ label, icon: Icon, onOpen, className }: DesktopIco
           "group-hover:border-cyan-400/30 group-hover:bg-[var(--surface-3)] transition-colors"
         )}
       >
-        <Icon className={cn(sizes.icon, "text-cyan-100/90")} />
+        <Icon className={cn(sizes.icon, "text-[var(--icon-accent)]")} />
       </div>
       <span
         className={cn(

@@ -43,15 +43,15 @@ export function RunningApps() {
             className={cn(
               "relative flex h-10 w-10 items-center justify-center rounded-lg transition-colors",
               isFocused
-                ? "bg-white/10 text-cyan-300"
-                : "text-[var(--text-3)] hover:bg-white/10 hover:text-[var(--text-1)]"
+                ? "bg-[var(--surface-3)] text-cyan-300"
+                : "text-[var(--text-3)] hover:bg-[var(--surface-3)] hover:text-[var(--text-1)]"
             )}
           >
             {Icon && <Icon className="h-5 w-5" />}
             <span
               className={cn(
                 "absolute bottom-0.5 h-1 w-1 rounded-full",
-                isFocused ? "bg-cyan-300" : "bg-white/40"
+                isFocused ? "bg-cyan-300" : "bg-[var(--text-4)]"
               )}
             />
           </button>

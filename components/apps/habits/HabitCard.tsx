@@ -67,7 +67,7 @@ export function HabitCard({ habit, onToggleToday, onDelete }: HabitCardProps) {
                   "h-2 w-2 rounded-full",
                   !isScheduled && "bg-[var(--surface-2)]",
                   isScheduled && isLogged && "",
-                  isScheduled && !isLogged && "border border-white/20"
+                  isScheduled && !isLogged && "border border-[var(--border-3)]"
                 )}
                 style={isScheduled && isLogged ? { backgroundColor: habit.color } : undefined}
               />

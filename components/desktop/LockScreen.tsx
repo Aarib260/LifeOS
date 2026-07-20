@@ -53,7 +53,7 @@ export function LockScreen({ onUnlock }: LockScreenProps) {
         transition={{ duration: 0.5, delay: 0.3 }}
         className="relative z-10 mt-10 flex flex-col items-center gap-3"
       >
-        <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-gradient-to-br from-cyan-400/30 to-indigo-400/30 text-xl font-medium text-white">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full border border-[var(--border-3)] bg-gradient-to-br from-cyan-400/30 to-indigo-400/30 text-xl font-medium text-[var(--text-1)]">
           {name[0]?.toUpperCase()}
         </div>
         <span className="text-sm text-[var(--text-2)]">{name}</span>

@@ -1,42 +1,59 @@
 "use client";
 
-import { useEffect } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ParticleCanvas, type ParticleStage } from "./boot/ParticleCanvas";
 
 interface BootScreenProps {
   onComplete: () => void;
 }
 
-const BOOT_DURATION = 2.2; // seconds
-
+/**
+ * Timeline: black hold -> glowing dot -> particles drift/connect ->
+ * particles converge into a ring -> wordmark fades in inside the ring ->
+ * soft pulse -> calls onComplete (parent crossfades this out and reveals
+ * the actual desktop underneath, already mounted).
+ */
 export function BootScreen({ onComplete }: BootScreenProps) {
+  const [stage, setStage] = useState<ParticleStage>("hidden");
+  const [showWordmark, setShowWordmark] = useState(false);
+
   useEffect(() => {
-    const timeout = setTimeout(onComplete, BOOT_DURATION * 1000);
-    return () => clearTimeout(timeout);
-  }, [onComplete]);
+    const t1 = setTimeout(() => setStage("dot"), 300);
+    const t2 = setTimeout(() => setStage("drift"), 700);
+    const t3 = setTimeout(() => setStage("converge"), 1900);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
+  }, []);
+
+  const handleConverged = () => {
+    setStage("settled");
+    setShowWordmark(true);
+    // Hold on the settled/pulsing logo briefly before handing off.
+    setTimeout(onComplete, 1100);
+  };
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-6 bg-[var(--bg-base)]">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6 }}
-        className="flex flex-col items-center gap-3"
-      >
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-400/30 bg-cyan-400/10">
-          <span className="text-xl font-semibold text-cyan-300">L</span>
-        </div>
-        <span className="text-lg font-medium tracking-tight text-[var(--text-1)]">LifeOS</span>
-      </motion.div>
+    <div className="relative flex h-full w-full items-center justify-center bg-[#0A0E14]">
+      <ParticleCanvas stage={stage} onConverged={handleConverged} />
 
-      <div className="h-1 w-40 overflow-hidden rounded-full bg-[var(--surface-3)]">
-        <motion.div
-          className="h-full rounded-full bg-cyan-400"
-          initial={{ width: "0%" }}
-          animate={{ width: "100%" }}
-          transition={{ duration: BOOT_DURATION, ease: "easeInOut" }}
-        />
-      </div>
+      <AnimatePresence>
+        {showWordmark && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: [0.85, 1.06, 1] }}
+            transition={{ duration: 0.9, times: [0, 0.6, 1], ease: "easeOut" }}
+            className="relative flex flex-col items-center gap-1"
+          >
+            <span className="text-lg font-semibold tracking-tight text-[#F4EEE2]">
+              LifeOS
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

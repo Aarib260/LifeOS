@@ -26,7 +26,7 @@ export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
         aria-label={task.isComplete ? "Mark incomplete" : "Mark complete"}
         className={cn(
           "flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors",
-          task.isComplete ? "border-cyan-400/60 bg-cyan-400/60" : "border-white/25 hover:border-cyan-400/50"
+          task.isComplete ? "border-cyan-400/60 bg-cyan-400/60" : "border-[var(--border-3)] hover:border-cyan-400/50"
         )}
       />
 

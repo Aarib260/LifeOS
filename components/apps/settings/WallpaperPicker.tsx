@@ -90,7 +90,7 @@ export function WallpaperPicker() {
               "relative flex h-12 w-full items-center justify-center overflow-hidden rounded-lg border-2 bg-cover bg-center",
               wallpaperId === CUSTOM_WALLPAPER_ID
                 ? "border-cyan-400/70"
-                : "border-dashed border-white/20"
+                : "border-dashed border-[var(--border-3)]"
             )}
             style={
               wallpaperId === CUSTOM_WALLPAPER_ID && customWallpaperDataUrl
