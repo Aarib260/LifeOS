@@ -6,6 +6,7 @@ import {
   BookOpen,
   Sparkles,
   Settings,
+  Terminal as TerminalIcon,
 } from "lucide-react";
 import type { AppDefinition, AppRegistry } from "@/types";
 import { TasksApp } from "@/components/apps/tasks/TasksApp";
@@ -15,6 +16,7 @@ import { CalendarApp } from "@/components/apps/calendar/CalendarApp";
 import { JournalApp } from "@/components/apps/journal/JournalApp";
 import { AIAssistantApp } from "@/components/apps/ai/AIAssistantApp";
 import { SettingsApp } from "@/components/apps/settings/SettingsApp";
+import { TerminalApp } from "@/components/apps/terminal/TerminalApp";
 
 /**
  * Single source of truth for every installed app: icon, launchable
@@ -83,6 +85,16 @@ export const APP_REGISTRY: AppRegistry = {
     component: SettingsApp,
     defaultSize: { width: 480, height: 420 },
     defaultPosition: { x: 260, y: 140 },
+  },
+  terminal: {
+    id: "terminal",
+    title: "Terminal",
+    icon: TerminalIcon,
+    component: TerminalApp,
+    defaultSize: { width: 620, height: 420 },
+    defaultPosition: { x: 280, y: 160 },
+    minSize: { width: 360, height: 220 },
+    allowMultipleInstances: true,
   },
 };
 
