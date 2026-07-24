@@ -53,3 +53,13 @@ export async function findChildByName(
   const children = await getChildren(parentId);
   return children.find((n) => n.name === name);
 }
+
+export async function copyNode(id: string, targetParentId: string | null): Promise<FSNode> {
+  const res = await fetch(`/api/fs/${id}/copy`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ targetParentId }),
+  });
+  if (!res.ok) throw new Error("Failed to copy item");
+  return res.json();
+}
