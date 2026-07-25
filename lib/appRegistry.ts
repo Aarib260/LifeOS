@@ -7,6 +7,7 @@ import {
   Sparkles,
   Settings,
   Terminal as TerminalIcon,
+  FolderOpen,
 } from "lucide-react";
 import type { AppDefinition, AppRegistry } from "@/types";
 import { TasksApp } from "@/components/apps/tasks/TasksApp";
@@ -17,6 +18,7 @@ import { JournalApp } from "@/components/apps/journal/JournalApp";
 import { AIAssistantApp } from "@/components/apps/ai/AIAssistantApp";
 import { SettingsApp } from "@/components/apps/settings/SettingsApp";
 import { TerminalApp } from "@/components/apps/terminal/TerminalApp";
+import { FileExplorerApp } from "@/components/apps/file-explorer/FileExplorerApp";
 
 /**
  * Single source of truth for every installed app: icon, launchable
@@ -94,6 +96,16 @@ export const APP_REGISTRY: AppRegistry = {
     defaultSize: { width: 620, height: 420 },
     defaultPosition: { x: 280, y: 160 },
     minSize: { width: 360, height: 220 },
+    allowMultipleInstances: true,
+  },
+  "file-explorer": {
+    id: "file-explorer",
+    title: "File Explorer",
+    icon: FolderOpen,
+    component: FileExplorerApp,
+    defaultSize: { width: 760, height: 520 },
+    defaultPosition: { x: 220, y: 100 },
+    minSize: { width: 480, height: 320 },
     allowMultipleInstances: true,
   },
 };

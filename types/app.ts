@@ -14,7 +14,8 @@ export type AppId =
   | "journal"
   | "ai-assistant"
   | "settings"
-  | "terminal";
+  | "terminal"
+  | "file-explorer";
 
 export interface AppDefinition {
   id: AppId;

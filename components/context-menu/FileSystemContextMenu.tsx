@@ -13,6 +13,11 @@ interface FileSystemContextMenuProps {
   onClose: () => void;
   /** Wire this to actually opening the file/folder once Explorer/viewers exist. */
   onOpen?: (node: FSNode) => void;
+  /**
+   * If provided, called instead of the window.prompt fallback — lets a
+   * caller (like File Explorer) swap in inline rename instead.
+   */
+  onRenameRequest?: (node: FSNode) => void;
 }
 
 /**
@@ -20,7 +25,12 @@ interface FileSystemContextMenuProps {
  * icons, and built generic enough (just needs an FSNode + onClose) to drop
  * straight into File Explorer list/grid items once that app exists.
  */
-export function FileSystemContextMenu({ node, onClose, onOpen }: FileSystemContextMenuProps) {
+export function FileSystemContextMenu({
+  node,
+  onClose,
+  onOpen,
+  onRenameRequest,
+}: FileSystemContextMenuProps) {
   const [view, setView] = useState<"menu" | "properties">("menu");
   const queryClient = useQueryClient();
   const clipboard = useClipboardStore();
@@ -34,6 +44,11 @@ export function FileSystemContextMenu({ node, onClose, onOpen }: FileSystemConte
   }
 
   async function handleRename() {
+    if (onRenameRequest) {
+      onRenameRequest(node);
+      onClose();
+      return;
+    }
     // window.prompt is a placeholder — swap for an in-place editable label
     // when inline rename lands in the Desktop Improvements phase.
     const next = window.prompt("Rename to:", node.name);
