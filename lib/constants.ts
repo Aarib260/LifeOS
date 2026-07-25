@@ -18,3 +18,10 @@ export const DEFAULT_WINDOW_SIZE = { width: 720, height: 480 };
 
 /** Absolute minimum window size, enforced regardless of app-specific minSize. */
 export const MIN_WINDOW_SIZE = { width: 320, height: 200 };
+
+/** Desktop icon grid cell size, in px — used for drag/reorder placement. */
+export const DESKTOP_ICON_CELL_WIDTH = 88;
+export const DESKTOP_ICON_CELL_HEIGHT = 100;
+
+/** Fallback row count used to lay out default icon positions before any dragging happens. */
+export const DESKTOP_ICON_GRID_ROWS = 8;

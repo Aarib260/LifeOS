@@ -66,23 +66,25 @@ export function FileSystemContextMenu({
   }
 
   function handleCopy() {
-    clipboard.setClipboard("copy", node.id, node.parentId);
+    clipboard.setClipboard("copy", [node.id], node.parentId);
     onClose();
   }
 
   function handleCut() {
-    clipboard.setClipboard("cut", node.id, node.parentId);
+    clipboard.setClipboard("cut", [node.id], node.parentId);
     onClose();
   }
 
   async function handlePasteInto() {
-    if (!clipboard.mode || !clipboard.nodeId || node.type !== "folder") return;
-    if (clipboard.mode === "copy") {
-      await copyNode(clipboard.nodeId, node.id);
-    } else {
-      await updateNode(clipboard.nodeId, { parentId: node.id });
-      clipboard.clear();
+    if (!clipboard.mode || clipboard.nodeIds.length === 0 || node.type !== "folder") return;
+    for (const id of clipboard.nodeIds) {
+      if (clipboard.mode === "copy") {
+        await copyNode(id, node.id);
+      } else {
+        await updateNode(id, { parentId: node.id });
+      }
     }
+    if (clipboard.mode === "cut") clipboard.clear();
     invalidate(node.id);
     onClose();
   }

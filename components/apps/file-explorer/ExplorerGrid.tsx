@@ -3,6 +3,7 @@
 import { Folder, File as FileIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { FSNode } from "@/types/fs";
+import { RenameInput } from "@/components/shared/RenameInput";
 
 interface ExplorerGridProps {
   items: FSNode[];
@@ -67,31 +68,5 @@ export function ExplorerGrid({
         </div>
       ))}
     </div>
-  );
-}
-
-export function RenameInput({
-  initialValue,
-  onCommit,
-  onCancel,
-}: {
-  initialValue: string;
-  onCommit: (value: string) => void;
-  onCancel: () => void;
-}) {
-  return (
-    <input
-      autoFocus
-      defaultValue={initialValue}
-      onClick={(e) => e.stopPropagation()}
-      onFocus={(e) => e.target.select()}
-      onKeyDown={(e) => {
-        e.stopPropagation();
-        if (e.key === "Enter") onCommit(e.currentTarget.value);
-        if (e.key === "Escape") onCancel();
-      }}
-      onBlur={(e) => onCommit(e.currentTarget.value)}
-      className="w-full rounded border border-cyan-400/50 bg-[var(--surface-1)] px-1 text-center text-[11px] text-[var(--text-1)] outline-none"
-    />
   );
 }

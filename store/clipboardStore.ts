@@ -4,9 +4,9 @@ export type ClipboardMode = "copy" | "cut";
 
 interface ClipboardState {
   mode: ClipboardMode | null;
-  nodeId: string | null;
+  nodeIds: string[];
   sourceParentId: string | null;
-  setClipboard: (mode: ClipboardMode, nodeId: string, sourceParentId: string | null) => void;
+  setClipboard: (mode: ClipboardMode, nodeIds: string[], sourceParentId: string | null) => void;
   clear: () => void;
 }
 
@@ -14,11 +14,14 @@ interface ClipboardState {
  * Deliberately not persisted (unlike settingsStore) — a clipboard that
  * survives a refresh and silently pastes something from last session
  * would be surprising. Ephemeral, in-memory only.
+ *
+ * Holds nodeIds (plural) so multi-select copy/cut on Desktop or in
+ * Explorer carries every selected item, not just one.
  */
 export const useClipboardStore = create<ClipboardState>((set) => ({
   mode: null,
-  nodeId: null,
+  nodeIds: [],
   sourceParentId: null,
-  setClipboard: (mode, nodeId, sourceParentId) => set({ mode, nodeId, sourceParentId }),
-  clear: () => set({ mode: null, nodeId: null, sourceParentId: null }),
+  setClipboard: (mode, nodeIds, sourceParentId) => set({ mode, nodeIds, sourceParentId }),
+  clear: () => set({ mode: null, nodeIds: [], sourceParentId: null }),
 }));

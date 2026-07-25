@@ -3,7 +3,7 @@
 import { Folder, File as FileIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { FSNode } from "@/types/fs";
-import { RenameInput } from "./ExplorerGrid";
+import { RenameInput } from "@/components/shared/RenameInput";
 
 interface ExplorerListProps {
   items: FSNode[];

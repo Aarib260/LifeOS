@@ -32,26 +32,43 @@ export function DesktopContextMenu({ onClose, onOpenPersonalize }: DesktopContex
     queryClient.invalidateQueries({ queryKey: ["fs", "children", DESKTOP_ID] });
 
   async function handleNewFolder() {
-    await createNode({ parentId: DESKTOP_ID, name: "New Folder", type: "folder" });
-    invalidateDesktop();
+    try {
+      await createNode({ parentId: DESKTOP_ID, name: "New Folder", type: "folder" });
+      invalidateDesktop();
+    } catch (error) {
+      console.error("[DesktopContextMenu] Failed to create folder:", error);
+      window.alert("Couldn't create the folder. Check the console for details.");
+    }
     onClose();
   }
 
   async function handleNewFile() {
-    await createNode({ parentId: DESKTOP_ID, name: "New File.txt", type: "file", content: "" });
-    invalidateDesktop();
+    try {
+      await createNode({ parentId: DESKTOP_ID, name: "New File.txt", type: "file", content: "" });
+      invalidateDesktop();
+    } catch (error) {
+      console.error("[DesktopContextMenu] Failed to create file:", error);
+      window.alert("Couldn't create the file. Check the console for details.");
+    }
     onClose();
   }
 
   async function handlePaste() {
-    if (!clipboard.mode || !clipboard.nodeId) return;
-    if (clipboard.mode === "copy") {
-      await copyNode(clipboard.nodeId, DESKTOP_ID);
-    } else {
-      await updateNode(clipboard.nodeId, { parentId: DESKTOP_ID });
-      clipboard.clear();
+    if (!clipboard.mode || clipboard.nodeIds.length === 0) return;
+    try {
+      for (const id of clipboard.nodeIds) {
+        if (clipboard.mode === "copy") {
+          await copyNode(id, DESKTOP_ID);
+        } else {
+          await updateNode(id, { parentId: DESKTOP_ID });
+        }
+      }
+      if (clipboard.mode === "cut") clipboard.clear();
+      invalidateDesktop();
+    } catch (error) {
+      console.error("[DesktopContextMenu] Failed to paste:", error);
+      window.alert("Couldn't paste here. Check the console for details.");
     }
-    invalidateDesktop();
     onClose();
   }
 

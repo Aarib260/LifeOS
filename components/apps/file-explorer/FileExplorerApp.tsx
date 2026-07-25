@@ -102,13 +102,15 @@ export function FileExplorerApp() {
   }
 
   async function handlePaste() {
-    if (!folderId || !clipboard.mode || !clipboard.nodeId) return;
-    if (clipboard.mode === "copy") {
-      await copyNode(clipboard.nodeId, folderId);
-    } else {
-      await updateNode(clipboard.nodeId, { parentId: folderId });
-      clipboard.clear();
+    if (!folderId || !clipboard.mode || clipboard.nodeIds.length === 0) return;
+    for (const id of clipboard.nodeIds) {
+      if (clipboard.mode === "copy") {
+        await copyNode(id, folderId);
+      } else {
+        await updateNode(id, { parentId: folderId });
+      }
     }
+    if (clipboard.mode === "cut") clipboard.clear();
     invalidate(folderId);
   }
 
@@ -127,10 +129,21 @@ export function FileExplorerApp() {
 
   function handleKeyDown(e: React.KeyboardEvent) {
     if (isRecycleBin) return;
+    const isMod = e.ctrlKey || e.metaKey;
+
     if (e.key === "Delete" && selectedIds.size > 0) {
       handleDeleteSelected();
     } else if (e.key === "F2" && selectedIds.size === 1) {
       setRenamingId([...selectedIds][0]);
+    } else if (isMod && e.key.toLowerCase() === "c" && selectedIds.size > 0) {
+      clipboard.setClipboard("copy", [...selectedIds], folderId);
+    } else if (isMod && e.key.toLowerCase() === "x" && selectedIds.size > 0) {
+      clipboard.setClipboard("cut", [...selectedIds], folderId);
+    } else if (isMod && e.key.toLowerCase() === "v") {
+      handlePaste();
+    } else if (isMod && e.key.toLowerCase() === "a") {
+      e.preventDefault();
+      setSelectedIds(new Set(visibleItems.map((n) => n.id)));
     }
   }
 

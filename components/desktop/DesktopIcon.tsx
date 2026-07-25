@@ -4,12 +4,19 @@ import { motion } from "framer-motion";
 import type { ComponentType } from "react";
 import { cn } from "@/lib/utils";
 import { useSettingsStore, type IconSize } from "@/store/settingsStore";
+import { RenameInput } from "@/components/shared/RenameInput";
 
 interface DesktopIconProps {
   label: string;
   icon: ComponentType<{ className?: string }>;
   onOpen: () => void;
   className?: string;
+  isSelected?: boolean;
+  isRenaming?: boolean;
+  onRenameCommit?: (value: string) => void;
+  onRenameCancel?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
+  onContextMenu?: (e: React.MouseEvent) => void;
 }
 
 const SIZE_CLASSES: Record<IconSize, { wrapper: string; tile: string; icon: string; label: string }> = {
@@ -23,24 +30,43 @@ const SIZE_CLASSES: Record<IconSize, { wrapper: string; tile: string; icon: stri
  * keyboard users) triggers onOpen — the Desktop is responsible for wiring
  * that to the window store; this component knows nothing about windows.
  * Size comes from Settings (iconSize) rather than being fixed.
+ *
+ * A plain div (not <button>) since it needs to host a nested <input>
+ * while renaming — a button can't contain another interactive element.
  */
-export function DesktopIcon({ label, icon: Icon, onOpen, className }: DesktopIconProps) {
+export function DesktopIcon({
+  label,
+  icon: Icon,
+  onOpen,
+  className,
+  isSelected,
+  isRenaming,
+  onRenameCommit,
+  onRenameCancel,
+  onClick,
+  onContextMenu,
+}: DesktopIconProps) {
   const iconSize = useSettingsStore((s) => s.iconSize);
   const sizes = SIZE_CLASSES[iconSize];
 
   return (
-    <motion.button
-      type="button"
+    <motion.div
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onContextMenu={onContextMenu}
       onDoubleClick={onOpen}
       onKeyDown={(e) => {
         if (e.key === "Enter") onOpen();
       }}
       whileTap={{ scale: 0.96 }}
       className={cn(
-        "group flex flex-col items-center gap-1.5 rounded-lg p-2",
+        "group flex flex-col items-center gap-1.5 rounded-lg p-2 cursor-default",
         sizes.wrapper,
         "outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/70",
-        "hover:bg-[var(--surface-1)] active:bg-[var(--surface-3)] transition-colors",
+        isSelected
+          ? "bg-[var(--surface-3)] ring-1 ring-cyan-400/50"
+          : "hover:bg-[var(--surface-1)] active:bg-[var(--surface-3)] transition-colors",
         className
       )}
     >
@@ -54,14 +80,19 @@ export function DesktopIcon({ label, icon: Icon, onOpen, className }: DesktopIco
       >
         <Icon className={cn(sizes.icon, "text-[var(--icon-accent)]")} />
       </div>
-      <span
-        className={cn(
-          sizes.label,
-          "leading-tight text-[var(--text-2)] text-center line-clamp-2 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]"
-        )}
-      >
-        {label}
-      </span>
-    </motion.button>
+
+      {isRenaming && onRenameCommit && onRenameCancel ? (
+        <RenameInput initialValue={label} onCommit={onRenameCommit} onCancel={onRenameCancel} />
+      ) : (
+        <span
+          className={cn(
+            sizes.label,
+            "leading-tight text-[var(--text-2)] text-center line-clamp-2 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]"
+          )}
+        >
+          {label}
+        </span>
+      )}
+    </motion.div>
   );
 }
