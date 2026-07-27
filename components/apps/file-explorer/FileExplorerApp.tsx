@@ -1,13 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { FolderPlus, FilePlus, ClipboardPaste, RotateCw } from "lucide-react";
 import { useFileSystem } from "@/hooks/useFileSystem";
 import { useContextMenu } from "@/hooks/useContextMenu";
 import { useResizablePanel } from "@/hooks/useResizablePanel";
 import { useClipboardStore } from "@/store/clipboardStore";
+import { useWindowStore } from "@/store/windowStore";
 import { copyNode, updateNode } from "@/lib/fsClient";
+import { getOpenAppOptions } from "@/lib/appRegistry";
+import { DEFAULT_ROOT_FOLDER_IDS } from "@/types/fs";
 import type { FSNode } from "@/types/fs";
 import { ContextMenu } from "@/components/context-menu/ContextMenu";
 import { ContextMenuItem, ContextMenuSeparator } from "@/components/context-menu/ContextMenuItem";
@@ -20,14 +23,28 @@ import { RecycleBinView } from "./RecycleBinView";
 import { useExplorerNavigation } from "./useExplorerNavigation";
 import type { ExplorerFilter, ExplorerSortBy, ExplorerSortDir, ExplorerViewMode } from "./types";
 
-export function FileExplorerApp() {
-  const nav = useExplorerNavigation();
+interface FileExplorerAppProps {
+  payload?: { initialFolderId?: string };
+  windowId: string;
+}
+
+export function FileExplorerApp({ payload, windowId }: FileExplorerAppProps) {
+  const nav = useExplorerNavigation(payload?.initialFolderId ?? DEFAULT_ROOT_FOLDER_IDS.desktop);
   const isRecycleBin = nav.current === "recycle-bin";
   const folderId = isRecycleBin ? null : nav.current;
 
   const fs = useFileSystem(folderId);
   const queryClient = useQueryClient();
   const clipboard = useClipboardStore();
+  const openApp = useWindowStore((s) => s.openApp);
+  const updateWindowPayload = useWindowStore((s) => s.updatePayload);
+
+  // Persist the current location into this window's payload so a refresh
+  // reopens Explorer wherever you actually navigated to, not just wherever
+  // it was first opened.
+  useEffect(() => {
+    updateWindowPayload(windowId, { initialFolderId: nav.current });
+  }, [nav.current, windowId, updateWindowPayload]);
 
   const sidebarPanel = useResizablePanel({ initial: 180, min: 140, max: 320 });
 
@@ -85,8 +102,9 @@ export function FileExplorerApp() {
     if (node.type === "folder") {
       nav.navigateTo(node.id);
       setSelectedIds(new Set());
+    } else {
+      openApp("file-viewer", getOpenAppOptions("file-viewer", { title: node.name, payload: { fileId: node.id } }));
     }
-    // Opening a file needs a viewer/editor app, which doesn't exist yet.
   }
 
   async function handleNewFolder() {

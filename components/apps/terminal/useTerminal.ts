@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { DEFAULT_ROOT_FOLDER_IDS } from "@/types/fs";
+import { useWindowStore } from "@/store/windowStore";
 import { executeCommand } from "./commands";
 
 export interface TerminalLine {
@@ -10,21 +11,41 @@ export interface TerminalLine {
   text: string;
 }
 
+interface TerminalPayload {
+  cwdId?: string;
+  history?: string[];
+}
+
 let lineCounter = 0;
 function nextLineId(): string {
   lineCounter += 1;
   return `line-${lineCounter}`;
 }
 
-export function useTerminal() {
+/**
+ * `windowId` + `payload` let this restore cwd and command history from a
+ * previous session (payload is what got persisted into windowStore before
+ * refresh). The visible scroll buffer (`lines`) is intentionally NOT
+ * restored — replaying old command output on every refresh would be
+ * noisy and doesn't carry the same "I was in the middle of something"
+ * value that cwd/history do. A short "restored" notice stands in for it.
+ */
+export function useTerminal(windowId: string, payload?: TerminalPayload) {
+  const updateWindowPayload = useWindowStore((s) => s.updatePayload);
+
+  const hasRestoredState = Boolean(payload?.cwdId || (payload?.history && payload.history.length > 0));
+
   const [lines, setLines] = useState<TerminalLine[]>([
     { id: nextLineId(), kind: "output", text: "LifeOS Terminal — type `help` to get started." },
+    ...(hasRestoredState
+      ? [{ id: nextLineId(), kind: "output" as const, text: "(Session restored — cwd and history carried over.)" }]
+      : []),
   ]);
-  const [cwdId, setCwdId] = useState<string>(DEFAULT_ROOT_FOLDER_IDS.desktop);
+  const [cwdId, setCwdId] = useState<string>(payload?.cwdId ?? DEFAULT_ROOT_FOLDER_IDS.desktop);
   const [inputValue, setInputValue] = useState("");
   const [isRunning, setIsRunning] = useState(false);
 
-  const historyRef = useRef<string[]>([]);
+  const historyRef = useRef<string[]>(payload?.history ?? []);
   const historyIndexRef = useRef<number | null>(null);
 
   const appendLines = useCallback((newLines: TerminalLine[]) => {
@@ -59,12 +80,15 @@ export function useTerminal() {
       );
     }
 
+    const finalCwd = result.newCwdId ?? cwdId;
     if (result.newCwdId) {
       setCwdId(result.newCwdId);
     }
 
+    updateWindowPayload(windowId, { cwdId: finalCwd, history: historyRef.current });
+
     setIsRunning(false);
-  }, [inputValue, isRunning, cwdId, appendLines]);
+  }, [inputValue, isRunning, cwdId, appendLines, updateWindowPayload, windowId]);
 
   const navigateHistory = useCallback((direction: "up" | "down") => {
     const history = historyRef.current;

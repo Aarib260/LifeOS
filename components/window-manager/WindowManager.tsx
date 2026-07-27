@@ -20,7 +20,7 @@ export function WindowManager() {
         const AppComponent = APP_REGISTRY[win.appId]?.component;
         return (
           <AppWindow key={win.id} window={win} isFocused={win.id === focusedId}>
-            {AppComponent ? <AppComponent /> : null}
+            {AppComponent ? <AppComponent payload={win.payload} windowId={win.id} /> : null}
           </AppWindow>
         );
       })}

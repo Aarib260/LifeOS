@@ -5,7 +5,7 @@ import { Search, Package, RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { APP_STORE_CATALOG, APP_STORE_CATEGORIES, type AppStoreCategory } from "@/lib/appStoreCatalog";
 import { useAppStoreStore } from "@/store/appStoreStore";
-import { APP_LIST } from "@/lib/appRegistry";
+import { VISIBLE_APP_LIST } from "@/lib/appRegistry";
 import { AppCard } from "./AppCard";
 import { FeaturedBanner } from "./FeaturedBanner";
 
@@ -40,7 +40,7 @@ export function AppStoreApp() {
           label="Installed"
           isActive={tab === "installed"}
           onClick={() => setTab("installed")}
-          count={APP_LIST.length + installedCatalogApps.length}
+          count={VISIBLE_APP_LIST.length + installedCatalogApps.length}
         />
         <TabButton
           label="Updates"
@@ -91,7 +91,7 @@ export function AppStoreApp() {
             <div>
               <p className="mb-2 px-1 text-[12px] font-medium text-[var(--text-4)]">Built into LifeOS</p>
               <div className="grid grid-cols-2 gap-2 lg:grid-cols-3">
-                {APP_LIST.map((app) => (
+                {VISIBLE_APP_LIST.map((app) => (
                   <div
                     key={app.id}
                     className="flex items-center gap-2.5 rounded-lg border border-[var(--border-2)] bg-[var(--surface-1)] p-2.5"

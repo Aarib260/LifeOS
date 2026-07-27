@@ -8,8 +8,10 @@ import {
   Settings,
   Terminal as TerminalIcon,
   FolderOpen,
+  Store,
+  FileText,
 } from "lucide-react";
-import type { AppDefinition, AppRegistry } from "@/types";
+import type { AppDefinition, AppId, AppRegistry } from "@/types";
 import { TasksApp } from "@/components/apps/tasks/TasksApp";
 import { HabitsApp } from "@/components/apps/habits/HabitsApp";
 import { GoalsApp } from "@/components/apps/goals/GoalsApp";
@@ -19,6 +21,8 @@ import { AIAssistantApp } from "@/components/apps/ai/AIAssistantApp";
 import { SettingsApp } from "@/components/apps/settings/SettingsApp";
 import { TerminalApp } from "@/components/apps/terminal/TerminalApp";
 import { FileExplorerApp } from "@/components/apps/file-explorer/FileExplorerApp";
+import { AppStoreApp } from "@/components/apps/app-store/AppStoreApp";
+import { FileViewerApp } from "@/components/apps/file-viewer/FileViewerApp";
 
 /**
  * Single source of truth for every installed app: icon, launchable
@@ -108,6 +112,49 @@ export const APP_REGISTRY: AppRegistry = {
     minSize: { width: 480, height: 320 },
     allowMultipleInstances: true,
   },
+  "app-store": {
+    id: "app-store",
+    title: "App Store",
+    icon: Store,
+    component: AppStoreApp,
+    defaultSize: { width: 680, height: 520 },
+    defaultPosition: { x: 240, y: 110 },
+    minSize: { width: 480, height: 400 },
+  },
+  "file-viewer": {
+    id: "file-viewer",
+    title: "File Viewer",
+    icon: FileText,
+    component: FileViewerApp,
+    defaultSize: { width: 560, height: 480 },
+    defaultPosition: { x: 260, y: 120 },
+    minSize: { width: 340, height: 260 },
+    allowMultipleInstances: true,
+    hidden: true,
+  },
 };
 
 export const APP_LIST: AppDefinition[] = Object.values(APP_REGISTRY);
+
+/** Apps that should actually appear on the Desktop, Start Menu, and App Store's "built in" list — excludes hidden utility apps like the file viewer. */
+export const VISIBLE_APP_LIST: AppDefinition[] = APP_LIST.filter((app) => !app.hidden);
+
+/**
+ * Builds the options object for `useWindowStore().openApp()` straight from
+ * the registry, so things like `allowMultipleInstances` and `minSize` only
+ * have to be declared once here instead of duplicated (and easy to forget)
+ * at every call site that opens an app.
+ */
+export function getOpenAppOptions(
+  appId: AppId,
+  overrides?: { title?: string; payload?: Record<string, unknown> }
+) {
+  const app = APP_REGISTRY[appId];
+  return {
+    title: overrides?.title ?? app.title,
+    size: app.defaultSize,
+    minSize: app.minSize,
+    allowMultipleInstances: app.allowMultipleInstances,
+    payload: overrides?.payload,
+  };
+}

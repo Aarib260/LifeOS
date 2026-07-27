@@ -4,8 +4,13 @@ import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { useTerminal } from "./useTerminal";
 
-export function TerminalApp() {
-  const { lines, inputValue, setInputValue, handleKeyDown, isRunning } = useTerminal();
+interface TerminalAppProps {
+  payload?: { cwdId?: string; history?: string[] };
+  windowId: string;
+}
+
+export function TerminalApp({ payload, windowId }: TerminalAppProps) {
+  const { lines, inputValue, setInputValue, handleKeyDown, isRunning } = useTerminal(windowId, payload);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 

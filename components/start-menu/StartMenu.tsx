@@ -6,7 +6,8 @@ import { SearchBar } from "./SearchBar";
 import { AppGrid } from "./AppGrid";
 import { RecentApps } from "./RecentApps";
 import { useWindowStore } from "@/store/windowStore";
-import { APP_LIST } from "@/lib/appRegistry";
+import { useSearchHistoryStore } from "@/store/searchHistoryStore";
+import { APP_LIST, VISIBLE_APP_LIST, getOpenAppOptions } from "@/lib/appRegistry";
 import { TASKBAR_HEIGHT, START_MENU_Z } from "@/lib/constants";
 import type { AppId } from "@/types";
 
@@ -18,16 +19,19 @@ interface StartMenuProps {
 export function StartMenu({ isOpen, onClose }: StartMenuProps) {
   const [query, setQuery] = useState("");
   const openApp = useWindowStore((s) => s.openApp);
+  const recentQueries = useSearchHistoryStore((s) => s.recentQueries);
+  const addQuery = useSearchHistoryStore((s) => s.addQuery);
 
   const filteredApps = useMemo(() => {
-    if (!query.trim()) return APP_LIST;
+    if (!query.trim()) return VISIBLE_APP_LIST;
     const q = query.toLowerCase();
-    return APP_LIST.filter((app) => app.title.toLowerCase().includes(q));
+    return VISIBLE_APP_LIST.filter((app) => app.title.toLowerCase().includes(q));
   }, [query]);
 
   const handleLaunch = (appId: AppId) => {
+    if (query.trim()) addQuery(query);
     const app = APP_LIST.find((a) => a.id === appId);
-    openApp(appId, { title: app?.title ?? appId, size: app?.defaultSize, minSize: app?.minSize });
+    openApp(appId, app ? getOpenAppOptions(appId) : { title: appId });
     setQuery("");
     onClose();
   };
@@ -59,6 +63,26 @@ export function StartMenu({ isOpen, onClose }: StartMenuProps) {
             </div>
 
             {!query && <RecentApps onLaunch={handleLaunch} />}
+
+            {!query && recentQueries.length > 0 && (
+              <div className="mb-3">
+                <p className="mb-1.5 px-1 text-[11px] font-medium uppercase tracking-wide text-[var(--text-4)]">
+                  Recent searches
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {recentQueries.map((q) => (
+                    <button
+                      key={q}
+                      type="button"
+                      onClick={() => setQuery(q)}
+                      className="rounded-full border border-[var(--border-1)] bg-[var(--surface-1)] px-2.5 py-1 text-[11px] text-[var(--text-2)] hover:bg-[var(--surface-3)] hover:text-[var(--text-1)]"
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <AppGrid apps={filteredApps} onLaunch={handleLaunch} />
           </motion.div>
