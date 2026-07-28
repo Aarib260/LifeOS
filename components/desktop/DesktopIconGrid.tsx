@@ -15,7 +15,8 @@ import { useDesktopIconStore } from "@/store/desktopIconStore";
 import { useContextMenu } from "@/hooks/useContextMenu";
 import { useFileSystem } from "@/hooks/useFileSystem";
 import { updateNode, copyNode } from "@/lib/fsClient";
-import { APP_LIST, APP_REGISTRY } from "@/lib/appRegistry";
+import { toast } from "@/store/toastStore";
+import { VISIBLE_APP_LIST, APP_REGISTRY, getOpenAppOptions } from "@/lib/appRegistry";
 import { DEFAULT_ROOT_FOLDER_IDS } from "@/types/fs";
 import type { FSNode } from "@/types/fs";
 import {
@@ -32,13 +33,15 @@ interface DesktopIconDescriptor {
   node?: FSNode;
 }
 
+export type DesktopSortBy = "name" | "type" | "modified";
+
 const DESKTOP_ID = DEFAULT_ROOT_FOLDER_IDS.desktop;
 
 export function DesktopIconGrid() {
   const openApp = useWindowStore((s) => s.openApp);
   const isRevealed = useIsRevealed();
   const clipboard = useClipboardStore();
-  const { positions, ensurePosition, moveIcon } = useDesktopIconStore();
+  const { positions, ensurePosition, moveIcon, setPositions } = useDesktopIconStore();
   const { children: desktopFiles } = useFileSystem(DESKTOP_ID);
   const queryClient = useQueryClient();
 
@@ -58,7 +61,7 @@ export function DesktopIconGrid() {
   const itemMenu = useContextMenu<DesktopIconDescriptor>();
 
   const icons: DesktopIconDescriptor[] = useMemo(() => {
-    const appIcons: DesktopIconDescriptor[] = APP_LIST.map((app) => ({
+    const appIcons: DesktopIconDescriptor[] = VISIBLE_APP_LIST.map((app) => ({
       id: app.id,
       kind: "app",
       label: app.title,
@@ -77,24 +80,55 @@ export function DesktopIconGrid() {
   // Assign a default grid slot to any icon that doesn't have one yet
   // (new icons only — dragged icons keep whatever position they were
   // moved to, since ensurePosition is a no-op if one already exists).
+  //
+  // Previously this used the icon's array index directly as (col, row),
+  // which collided with icons that had been dragged to a custom spot —
+  // e.g. creating a new file could land it right on top of an existing
+  // dragged icon. Now it scans for the first genuinely unoccupied cell.
   useEffect(() => {
-    icons.forEach((icon, index) => {
-      ensurePosition(icon.id, { col: Math.floor(index / ROWS), row: index % ROWS });
+    const occupied = new Set(
+      Object.values(positions).map((p) => `${p.col}:${p.row}`)
+    );
+
+    icons.forEach((icon) => {
+      if (positions[icon.id]) return;
+
+      let placed = false;
+      for (let col = 0; !placed && col < 1000; col++) {
+        for (let row = 0; row < ROWS; row++) {
+          const key = `${col}:${row}`;
+          if (!occupied.has(key)) {
+            occupied.add(key);
+            ensurePosition(icon.id, { col, row });
+            placed = true;
+            break;
+          }
+        }
+      }
     });
-  }, [icons, ensurePosition]);
+  }, [icons, positions, ensurePosition]);
 
   function handleOpen(icon: DesktopIconDescriptor) {
     if (icon.kind === "app") {
       const app = APP_REGISTRY[icon.id as keyof typeof APP_REGISTRY];
-      openApp(app.id, { title: app.title, size: app.defaultSize, minSize: app.minSize });
+      openApp(app.id, getOpenAppOptions(app.id));
     } else if (icon.node?.type === "folder") {
-      const explorer = APP_REGISTRY["file-explorer"];
-      openApp(explorer.id, { title: icon.node.name, size: explorer.defaultSize, minSize: explorer.minSize });
-      // NOTE: this opens Explorer at its default (Desktop) location rather
-      // than jumping straight into this folder — Explorer doesn't yet
-      // accept an initial folder id. Worth wiring through once that's needed.
+      openApp(
+        "file-explorer",
+        getOpenAppOptions("file-explorer", {
+          title: icon.node.name,
+          payload: { initialFolderId: icon.node.id },
+        })
+      );
+    } else if (icon.node?.type === "file") {
+      openApp(
+        "file-viewer",
+        getOpenAppOptions("file-viewer", {
+          title: icon.node.name,
+          payload: { fileId: icon.node.id },
+        })
+      );
     }
-    // Opening a file needs a viewer/editor app, which doesn't exist yet.
   }
 
   function handleIconClick(icon: DesktopIconDescriptor, e: React.MouseEvent) {
@@ -142,6 +176,38 @@ export function DesktopIconGrid() {
     }
     if (clipboard.mode === "cut") clipboard.clear();
     invalidateDesktop();
+  }
+
+  /**
+   * Re-lays-out every icon (apps and files alike) top-to-bottom, column by
+   * column, by the chosen criterion. Apps have no meaningful "modified"
+   * date, so for that mode they sort first as a stable group, then files
+   * newest-first — keeping app launchers predictably in the same corner
+   * rather than scattered among files by an arbitrary tiebreak.
+   */
+  function handleSort(by: DesktopSortBy) {
+    const rank = (icon: DesktopIconDescriptor) => {
+      if (icon.kind === "app") return 0;
+      return icon.node?.type === "folder" ? 1 : 2;
+    };
+
+    const sorted = [...icons].sort((a, b) => {
+      if (by === "name") return a.label.localeCompare(b.label);
+      if (by === "type") return rank(a) - rank(b) || a.label.localeCompare(b.label);
+
+      // modified: apps stay grouped first (stable order), files sort newest first
+      if (a.kind === "app" && b.kind === "app") return 0;
+      if (a.kind === "app") return -1;
+      if (b.kind === "app") return 1;
+      return (b.node?.updatedAt ?? "").localeCompare(a.node?.updatedAt ?? "");
+    });
+
+    const next: Record<string, { col: number; row: number }> = {};
+    sorted.forEach((icon, index) => {
+      next[icon.id] = { col: Math.floor(index / ROWS), row: index % ROWS };
+    });
+    setPositions(next);
+    toast.success(`Sorted by ${by === "modified" ? "date modified" : by}`);
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
@@ -301,6 +367,7 @@ export function DesktopIconGrid() {
           onOpenPersonalize={() =>
             handleOpen({ id: "settings", kind: "app", label: "Settings", icon: Folder })
           }
+          onSort={handleSort}
         />
       </ContextMenu>
 

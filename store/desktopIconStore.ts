@@ -13,6 +13,8 @@ interface DesktopIconState {
   /** Moves an icon to a cell, swapping with whatever already occupies it. */
   moveIcon: (id: string, target: IconGridPosition) => void;
   removePosition: (id: string) => void;
+  /** Replaces positions for the given ids wholesale — for bulk reflow (e.g. Sort), where sequential moveIcon swaps would produce a scrambled result. */
+  setPositions: (next: Record<string, IconGridPosition>) => void;
 }
 
 export const useDesktopIconStore = create<DesktopIconState>()(
@@ -48,6 +50,10 @@ export const useDesktopIconStore = create<DesktopIconState>()(
           delete next[id];
           return { positions: next };
         });
+      },
+
+      setPositions: (next) => {
+        set((s) => ({ positions: { ...s.positions, ...next } }));
       },
     }),
     { name: "lifeos-desktop-icons" }

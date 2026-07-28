@@ -6,24 +6,29 @@ import {
   FilePlus,
   ClipboardPaste,
   ArrowDownAZ,
+  Shapes,
+  Clock,
   Paintbrush,
   Info,
   RotateCw,
 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
-import { ContextMenuItem, ContextMenuSeparator } from "./ContextMenuItem";
+import { ContextMenuItem, ContextMenuSeparator, ContextSubmenu } from "./ContextMenuItem";
 import { useClipboardStore } from "@/store/clipboardStore";
 import { createNode, updateNode, copyNode } from "@/lib/fsClient";
+import { toast } from "@/store/toastStore";
 import { DEFAULT_ROOT_FOLDER_IDS } from "@/types/fs";
+import type { DesktopSortBy } from "@/components/desktop/DesktopIconGrid";
 
 interface DesktopContextMenuProps {
   onClose: () => void;
   onOpenPersonalize: () => void;
+  onSort: (by: DesktopSortBy) => void;
 }
 
 const DESKTOP_ID = DEFAULT_ROOT_FOLDER_IDS.desktop;
 
-export function DesktopContextMenu({ onClose, onOpenPersonalize }: DesktopContextMenuProps) {
+export function DesktopContextMenu({ onClose, onOpenPersonalize, onSort }: DesktopContextMenuProps) {
   const [view, setView] = useState<"menu" | "properties">("menu");
   const queryClient = useQueryClient();
   const clipboard = useClipboardStore();
@@ -35,9 +40,10 @@ export function DesktopContextMenu({ onClose, onOpenPersonalize }: DesktopContex
     try {
       await createNode({ parentId: DESKTOP_ID, name: "New Folder", type: "folder" });
       invalidateDesktop();
+      toast.success("Folder created");
     } catch (error) {
       console.error("[DesktopContextMenu] Failed to create folder:", error);
-      window.alert("Couldn't create the folder. Check the console for details.");
+      toast.error("Couldn't create the folder");
     }
     onClose();
   }
@@ -46,9 +52,10 @@ export function DesktopContextMenu({ onClose, onOpenPersonalize }: DesktopContex
     try {
       await createNode({ parentId: DESKTOP_ID, name: "New File.txt", type: "file", content: "" });
       invalidateDesktop();
+      toast.success("File created");
     } catch (error) {
       console.error("[DesktopContextMenu] Failed to create file:", error);
-      window.alert("Couldn't create the file. Check the console for details.");
+      toast.error("Couldn't create the file");
     }
     onClose();
   }
@@ -63,11 +70,13 @@ export function DesktopContextMenu({ onClose, onOpenPersonalize }: DesktopContex
           await updateNode(id, { parentId: DESKTOP_ID });
         }
       }
+      const count = clipboard.nodeIds.length;
       if (clipboard.mode === "cut") clipboard.clear();
       invalidateDesktop();
+      toast.success(count === 1 ? "Pasted 1 item" : `Pasted ${count} items`);
     } catch (error) {
       console.error("[DesktopContextMenu] Failed to paste:", error);
-      window.alert("Couldn't paste here. Check the console for details.");
+      toast.error("Couldn't paste here");
     }
     onClose();
   }
@@ -100,13 +109,32 @@ export function DesktopContextMenu({ onClose, onOpenPersonalize }: DesktopContex
         shortcut="Ctrl+V"
       />
       <ContextMenuSeparator />
-      {/*
-        A real "Sort by" submenu (Name/Type/Date, asc/desc) is worth adding
-        once Desktop Improvements lands and there's more than a handful of
-        icons to reorder. For now this just re-syncs against the VFS, which
-        is what "Sort" would trigger a repaint of anyway.
-      */}
-      <ContextMenuItem label="Sort by Name" icon={ArrowDownAZ} onClick={handleRefresh} />
+      <ContextSubmenu label="Sort by" icon={ArrowDownAZ}>
+        <ContextMenuItem
+          label="Name"
+          icon={ArrowDownAZ}
+          onClick={() => {
+            onSort("name");
+            onClose();
+          }}
+        />
+        <ContextMenuItem
+          label="Type"
+          icon={Shapes}
+          onClick={() => {
+            onSort("type");
+            onClose();
+          }}
+        />
+        <ContextMenuItem
+          label="Date modified"
+          icon={Clock}
+          onClick={() => {
+            onSort("modified");
+            onClose();
+          }}
+        />
+      </ContextSubmenu>
       <ContextMenuItem
         label="Personalize"
         icon={Paintbrush}

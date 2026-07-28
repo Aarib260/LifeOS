@@ -54,7 +54,10 @@ export function AppWindow({ window: win, isFocused, children }: AppWindowProps) 
       className={cn(
         "absolute flex flex-col overflow-hidden rounded-xl border shadow-2xl",
         "bg-[var(--bg-panel-90)] backdrop-blur-xl",
-        isFocused ? "border-cyan-400/30 shadow-cyan-500/10" : "border-[var(--border-2)]",
+        "transition-[border-color,box-shadow,opacity] duration-200",
+        isFocused
+          ? "border-cyan-400/30 shadow-cyan-500/10 opacity-100"
+          : "border-[var(--border-2)] opacity-[0.94] shadow-black/20",
         win.isMinimized && "pointer-events-none"
       )}
       style={{
@@ -74,6 +77,9 @@ export function AppWindow({ window: win, isFocused, children }: AppWindowProps) 
       transition={{ type: "spring", stiffness: 320, damping: 28 }}
       onPointerDownCapture={() => focusWindow(win.id)}
     >
+      {/* Glass highlight — a faint lighter line along the top edge, the kind
+          of detail that sells "frosted glass" rather than "flat panel." */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
       {/* Title bar — drag handle, double-click to maximize */}
       <div
         className="flex h-10 shrink-0 items-center justify-between border-b border-[var(--border-1)] px-3 cursor-grab active:cursor-grabbing"
