@@ -10,6 +10,7 @@ import {
   FolderOpen,
   Store,
   FileText,
+  Gauge,
 } from "lucide-react";
 import type { AppDefinition, AppId, AppRegistry } from "@/types";
 import { TasksApp } from "@/components/apps/tasks/TasksApp";
@@ -23,6 +24,7 @@ import { TerminalApp } from "@/components/apps/terminal/TerminalApp";
 import { FileExplorerApp } from "@/components/apps/file-explorer/FileExplorerApp";
 import { AppStoreApp } from "@/components/apps/app-store/AppStoreApp";
 import { FileViewerApp } from "@/components/apps/file-viewer/FileViewerApp";
+import { PerformanceMonitorApp } from "@/components/apps/performance-monitor/PerformanceMonitorApp";
 
 /**
  * Single source of truth for every installed app: icon, launchable
@@ -131,6 +133,15 @@ export const APP_REGISTRY: AppRegistry = {
     minSize: { width: 340, height: 260 },
     allowMultipleInstances: true,
     hidden: true,
+  },
+  "performance-monitor": {
+    id: "performance-monitor",
+    title: "Performance",
+    icon: Gauge,
+    component: PerformanceMonitorApp,
+    defaultSize: { width: 620, height: 640 },
+    defaultPosition: { x: 300, y: 90 },
+    minSize: { width: 420, height: 480 },
   },
 };
 

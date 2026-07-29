@@ -17,7 +17,8 @@ export type AppId =
   | "terminal"
   | "file-explorer"
   | "app-store"
-  | "file-viewer";
+  | "file-viewer"
+  | "performance-monitor";
 
 export interface AppDefinition {
   id: AppId;
