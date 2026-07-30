@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight, Play } from "lucide-react";
-import { OSLiveMockup } from "./OSLiveMockup";
+import { OSPreviewMockup } from "./OSPreviewMockup";
 import { GlowArc } from "./GlowArc";
 import { DotPattern } from "./DotPattern";
 
@@ -71,7 +71,7 @@ export function Hero() {
       </div>
 
       <div className="relative mt-20">
-        <OSLiveMockup />
+        <OSPreviewMockup />
       </div>
     </section>
   );
