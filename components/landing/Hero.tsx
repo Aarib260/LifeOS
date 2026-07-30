@@ -3,14 +3,12 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Play } from "lucide-react";
 import { OSPreviewMockup } from "./OSPreviewMockup";
-import { GlowArc } from "./GlowArc";
-import { DotPattern } from "./DotPattern";
+import { HalftoneBackground } from "./HalftoneBackground";
 
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-black px-6 pb-24 pt-40">
-      <DotPattern className="opacity-40" />
-      <GlowArc />
+      <HalftoneBackground />
 
       <div className="relative mx-auto max-w-3xl text-center">
         <motion.div
