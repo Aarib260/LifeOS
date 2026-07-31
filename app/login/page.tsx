@@ -43,7 +43,7 @@ export default function LoginPage() {
               Welcome back to your desktop.
             </p>
           </div>
-          <span className="text-xs text-[var(--text-5)]">Built by a Hack Club member.</span>
+          <span className="text-xs text-[var(--text-5)]">Built by Aarib.</span>
         </div>
       </div>
 
