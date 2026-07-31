@@ -1,9 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, Play } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { OSPreviewMockup } from "./OSPreviewMockup";
 import { HalftoneBackground } from "./HalftoneBackground";
+
+const FOCUS_RING =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black";
 
 export function Hero() {
   return (
@@ -45,26 +49,22 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mt-8 flex items-center justify-center gap-3"
         >
-          <a
+          <Link
             href="/login"
-            className="flex items-center gap-1.5 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-white/90"
+            className={`flex items-center gap-1.5 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-white/90 ${FOCUS_RING}`}
           >
             Launch LifeOS
             <ArrowUpRight className="h-4 w-4" />
-          </a>
+          </Link>
 
-          {/*
-            No demo video exists yet — this button is currently inert
-            (no href/onClick) so it doesn't silently 404 or link nowhere.
-            Wire it up once you have something for it to actually open.
-          */}
-          <button
-            type="button"
-            className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-6 py-3 text-sm font-medium text-white/80 transition-colors hover:bg-white/[0.08]"
+          <a
+            href="https://github.com/Aarib260/LifeOS"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-6 py-3 text-sm font-medium text-white/80 transition-colors hover:bg-white/[0.08] ${FOCUS_RING}`}
           >
-            <Play className="h-3.5 w-3.5 fill-current" />
-            Watch Demo
-          </button>
+            View Source
+          </a>
         </motion.div>
       </div>
 

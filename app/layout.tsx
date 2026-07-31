@@ -6,6 +6,16 @@ import { ThemeEffect } from "@/components/shared/ThemeEffect";
 export const metadata: Metadata = {
   title: "LifeOS",
   description: "A browser-based personal operating system",
+  openGraph: {
+    title: "LifeOS",
+    description: "A browser-based personal operating system",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "LifeOS",
+    description: "A browser-based personal operating system",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

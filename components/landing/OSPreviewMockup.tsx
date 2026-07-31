@@ -1,20 +1,21 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  LayoutGrid,
-  Home,
-  Folder,
-  FileText,
-  CalendarDays,
-  BarChart3,
-  Settings,
-  Wifi,
-  BatteryFull,
-  Check,
-} from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { Wifi, BatteryFull, Check } from "lucide-react";
+import { APP_REGISTRY } from "@/lib/appRegistry";
 
-const SIDEBAR_ICONS = [LayoutGrid, Home, Folder, FileText, CalendarDays, BarChart3, Settings];
+// Curated subset of the real app registry, in dock order — if an app is
+// renamed or its icon changes in appRegistry.ts, this dock follows it
+// automatically instead of drifting out of sync.
+const DOCK_APP_IDS = [
+  "tasks",
+  "calendar",
+  "journal",
+  "terminal",
+  "file-explorer",
+  "app-store",
+  "settings",
+] as const;
 
 const TASKS = [
   { label: "OS Development", done: true },
@@ -24,22 +25,31 @@ const TASKS = [
   { label: "Learn Cybersecurity", done: false },
 ];
 
+const TERMINAL_LINES = [
+  { prompt: true, text: "ls ~/projects" },
+  { prompt: false, text: "LifeOS  QRForge  PhishGuard" },
+  { prompt: true, text: "cat notes.md" },
+  { prompt: false, text: "# Ship the file explorer today" },
+];
+
 /**
- * A styled placeholder illustration of the LifeOS desktop — not a real
- * screenshot, not a live iframe. Swap this out for an actual screenshot
- * (drop an image into /public and replace this component's contents with
- * an <img>) once you have a desktop state you're happy freezing in time.
- * Everything here (sidebar icons, task list, date card) is illustrative
- * sample content, not pulled from real app state.
+ * A styled illustration of the LifeOS desktop, not a live screenshot or
+ * iframe. The dock icons and app names below are pulled straight from
+ * lib/appRegistry.ts, so this stays honest about which apps actually
+ * ship — but the window contents (task list, terminal lines, date) are
+ * still illustrative sample data, not real app state. Swap this for an
+ * actual screen recording or screenshot once you have a desktop state
+ * you're happy freezing in time; that will outperform this illustration.
  */
 export function OSPreviewMockup() {
   const completedCount = TASKS.filter((t) => t.done).length;
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 32 }}
+      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 32 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+      transition={{ duration: shouldReduceMotion ? 0 : 0.8, delay: shouldReduceMotion ? 0 : 0.3, ease: "easeOut" }}
       className="relative mx-auto w-full max-w-5xl"
     >
       {/* Laptop bezel */}
@@ -56,16 +66,40 @@ export function OSPreviewMockup() {
             <span>Mon 12:30</span>
           </div>
 
-          {/* Sidebar icon dock */}
+          {/* Sidebar icon dock — real apps from the registry */}
           <div className="absolute left-6 top-16 flex flex-col gap-3">
-            {SIDEBAR_ICONS.map((Icon, i) => (
-              <div
-                key={i}
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] backdrop-blur-sm"
-              >
-                <Icon className="h-4 w-4 text-white/80" />
+            {DOCK_APP_IDS.map((id) => {
+              const Icon = APP_REGISTRY[id].icon;
+              return (
+                <div
+                  key={id}
+                  title={APP_REGISTRY[id].title}
+                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] backdrop-blur-sm"
+                >
+                  <Icon className="h-4 w-4 text-white/80" />
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Terminal snippet card */}
+          <div className="absolute bottom-6 left-6 w-64 rounded-2xl border border-white/10 bg-black/60 p-4 font-mono text-[11px] backdrop-blur-md">
+            <div className="mb-2 flex items-center gap-1.5">
+              <div className="h-2 w-2 rounded-full bg-red-500/80" />
+              <div className="h-2 w-2 rounded-full bg-yellow-500/80" />
+              <div className="h-2 w-2 rounded-full bg-green-500/80" />
+            </div>
+            <div className="space-y-1">
+              {TERMINAL_LINES.map((line, i) => (
+                <div key={i} className={line.prompt ? "text-violet-300" : "text-white/50"}>
+                  {line.prompt ? "$ " : ""}
+                  {line.text}
+                </div>
+              ))}
+              <div className="text-violet-300">
+                $ <span className="animate-pulse">_</span>
               </div>
-            ))}
+            </div>
           </div>
 
           {/* Date card */}

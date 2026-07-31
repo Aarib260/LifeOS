@@ -8,6 +8,7 @@ import {
   motion,
   useScroll,
   useTransform,
+  useReducedMotion,
 } from "framer-motion";
 
 import { useRef } from "react";
@@ -33,6 +34,20 @@ const FEATURE_DESCRIPTIONS: Record<AppId, string> = {
 
   settings:
     "Personalize wallpapers, glass effects, icons and every part of LifeOS.",
+
+  terminal:
+    "A real shell in your browser — navigate, run commands and script your way around the OS.",
+
+  "file-explorer":
+    "Browse, move and organize files in a virtual file system with a familiar drag-and-drop explorer.",
+
+  "app-store":
+    "Discover and install new apps as LifeOS grows past what ships on day one.",
+
+  "file-viewer": "",
+
+  "performance-monitor":
+    "Keep an eye on how your OS is running under the hood, in real time.",
 };
 
 const SECTIONS = [
@@ -61,11 +76,18 @@ const SECTIONS = [
   },
 
   {
+    title: "Command Your System",
+    subtitle:
+      "A real virtual file system and shell, right in the browser — not just app windows.",
+
+    apps: ["terminal", "file-explorer"] as AppId[],
+  },
+  {
     title: "Make It Yours",
     subtitle:
-      "Customize the operating system so it feels uniquely yours.",
+      "Customize the OS and grow it over time with more apps.",
 
-    apps: ["settings"] as AppId[],
+    apps: ["settings", "app-store"] as AppId[],
   },
 ];
 
@@ -76,6 +98,7 @@ type CardProps = {
 
 function FeatureCard({ section, index }: CardProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -85,25 +108,25 @@ function FeatureCard({ section, index }: CardProps) {
   const scale = useTransform(
     scrollYProgress,
     [0, 0.4, 0.8, 1],
-    [0.9, 1, 1, 0.95]
+    shouldReduceMotion ? [1, 1, 1, 1] : [0.9, 1, 1, 0.95]
   );
 
   const opacity = useTransform(
     scrollYProgress,
     [0, 0.2, 0.8, 1],
-    [0.2, 1, 1, 0.3]
+    shouldReduceMotion ? [1, 1, 1, 1] : [0.2, 1, 1, 0.3]
   );
 
   const y = useTransform(
     scrollYProgress,
     [0, 1],
-    [120, -120]
+    shouldReduceMotion ? [0, 0] : [120, -120]
   );
 
   return (
     <div
       ref={ref}
-      className="relative h-[150vh]"
+      className="relative h-[120vh] md:h-[150vh]"
     >
       <motion.div
         style={{
@@ -111,8 +134,8 @@ function FeatureCard({ section, index }: CardProps) {
           opacity,
           y,
         }}
-        className="sticky top-28 overflow-hidden rounded-[36px] border border-white/10 bg-white/[0.03] backdrop-blur-3xl shadow-[0_40px_120px_rgba(0,0,0,.45)]"
-      ><div className="grid min-h-[85vh] grid-cols-1 gap-16 p-14 lg:grid-cols-2 lg:p-20">
+        className="sticky top-20 overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] backdrop-blur-3xl shadow-[0_40px_120px_rgba(0,0,0,.45)] md:top-28 md:rounded-[36px]"
+      ><div className="grid min-h-[85vh] grid-cols-1 gap-10 p-8 sm:p-14 lg:grid-cols-2 lg:gap-16 lg:p-20">
 
   {/* LEFT */}
 
@@ -127,7 +150,7 @@ function FeatureCard({ section, index }: CardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: .6 }}
-      className="text-5xl font-bold leading-tight text-white lg:text-6xl"
+      className="text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl"
     >
       {section.title}
     </motion.h2>
@@ -137,7 +160,7 @@ function FeatureCard({ section, index }: CardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay: .1 }}
       viewport={{ once: true }}
-      className="mt-8 max-w-xl text-lg leading-8 text-white/55"
+      className="mt-6 max-w-xl text-base leading-7 text-white/55 sm:mt-8 sm:text-lg sm:leading-8"
     >
       {section.subtitle}
     </motion.p>
@@ -212,7 +235,7 @@ function FeatureCard({ section, index }: CardProps) {
 
   >
 
-    <div className="relative h-[520px] w-full overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-[#111] via-[#0b0b0b] to-black shadow-[0_30px_100px_rgba(0,0,0,.45)]">
+    <div className="relative h-[340px] w-full overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-[#111] via-[#0b0b0b] to-black shadow-[0_30px_100px_rgba(0,0,0,.45)] sm:h-[420px] lg:h-[520px]">
 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(139,92,246,.18),transparent_60%)]" />
 
@@ -314,7 +337,7 @@ export function FeatureGrid() {
 
           </span>
 
-          <h2 className="mt-8 text-5xl font-bold leading-tight text-white md:text-6xl">
+          <h2 className="mt-8 text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">
 
             Everything you need.
 

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowUpRight, Terminal } from "lucide-react";
 
 export function LandingFooter() {
@@ -89,15 +90,15 @@ export function LandingFooter() {
 
             <div className="space-y-3 text-white/60">
 
-              <a href="#features" className="block hover:text-white">
+              <a href="#features" className="block rounded hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/70">
                 Features
               </a>
 
-              <a href="/login" className="block hover:text-white">
+              <Link href="/login" className="block rounded hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/70">
                 Launch
-              </a>
+              </Link>
 
-              <a href="#faq" className="block hover:text-white">
+              <a href="#faq" className="block rounded hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/70">
                 FAQ
               </a>
 
@@ -118,7 +119,7 @@ export function LandingFooter() {
       "TypeScript",
       "Tailwind CSS",
       "Framer Motion",
-      "Supabase",
+      "Neon Postgres",
     ].map((tech) => (
       <span
         key={tech}
@@ -138,7 +139,14 @@ export function LandingFooter() {
 
           <span>© 2026 LifeOS</span>
 
-          <span>Built by Aarib • Open Source</span>
+          <a
+            href="https://github.com/Aarib260/LifeOS"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/70"
+          >
+            Built by Aarib • Open Source
+          </a>
 
         </div>
 

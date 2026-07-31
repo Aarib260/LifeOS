@@ -56,9 +56,11 @@ export function FinalCTA() {
 
             </div>
 
-            {/* Fake Inputs */}
+            {/* Fake Inputs — purely decorative illustration of a login
+                form, not real fields. aria-hidden so screen readers don't
+                announce "Username: yourname" as if it were a real value. */}
 
-            <div className="mt-10 space-y-5">
+            <div aria-hidden className="mt-10 space-y-5">
 
               <div>
                 <p className="mb-2 text-sm text-white/45">
@@ -86,7 +88,7 @@ export function FinalCTA() {
 
             <Link
               href="/login"
-              className="group mt-8 flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-4 text-base font-semibold text-black transition-all duration-300 hover:scale-[1.02] hover:bg-white/90"
+              className="group mt-8 flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-4 text-base font-semibold text-black transition-all duration-300 hover:scale-[1.02] hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               Launch LifeOS
 
@@ -95,7 +97,7 @@ export function FinalCTA() {
 
             {/* Bottom Status */}
 
-            <div className="mt-8 flex items-center justify-center gap-2 text-sm text-emerald-400">
+            <div aria-hidden className="mt-8 flex items-center justify-center gap-2 text-sm text-emerald-400">
 
               <ShieldCheck className="h-4 w-4" />
 
