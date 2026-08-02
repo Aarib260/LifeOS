@@ -12,7 +12,8 @@ interface TaskRow {
   updated_at: string;
 }
 
-export function mapRowToTask(row: TaskRow): Task {
+export function mapRowToTask(input: Record<string, any>): Task {
+  const row = input as TaskRow;
   return {
     id: row.id,
     title: row.title,

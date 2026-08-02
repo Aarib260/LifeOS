@@ -9,7 +9,8 @@ interface JournalEntryRow {
   updated_at: string;
 }
 
-export function mapRowToEntry(row: JournalEntryRow): JournalEntry {
+export function mapRowToEntry(input: Record<string, any>): JournalEntry {
+  const row = input as JournalEntryRow;
   return {
     id: row.id,
     title: row.title,

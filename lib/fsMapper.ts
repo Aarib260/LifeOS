@@ -15,7 +15,8 @@ interface FSNodeRow {
   updated_at: string;
 }
 
-export function mapRowToFSNode(row: FSNodeRow): FSNode {
+export function mapRowToFSNode(input: Record<string, any>): FSNode {
+  const row = input as FSNodeRow;
   return {
     id: row.id,
     parentId: row.parent_id,

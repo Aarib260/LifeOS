@@ -11,7 +11,8 @@ interface GoalRow {
   milestones: Milestone[];
 }
 
-export function mapRowToGoal(row: GoalRow): Goal {
+export function mapRowToGoal(input: Record<string, any>): Goal {
+  const row = input as GoalRow;
   const milestones = row.milestones ?? [];
   const total = milestones.length;
   const completed = milestones.filter((m) => m.isComplete).length;

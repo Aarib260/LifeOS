@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Moon, Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
-  { label: "Features", href: "#features" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Features", href: "/#features" },
+  { label: "FAQ", href: "/#faq" },
   { label: "About", href: "/about" },
 ];
 
@@ -33,6 +34,7 @@ const FOCUS_RING =
  */
 export function LandingNav() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <nav className="fixed left-1/2 top-6 z-50 w-[calc(100%-2rem)] max-w-5xl -translate-x-1/2">
@@ -46,15 +48,21 @@ export function LandingNav() {
           </Link>
 
           <div className="hidden items-center gap-7 md:flex">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={`rounded text-[13px] text-white/70 transition-colors hover:text-white ${FOCUS_RING}`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const isActive = !link.href.includes("#") && pathname === link.href;
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`rounded text-[13px] transition-colors hover:text-white ${FOCUS_RING} ${
+                    isActive ? "text-white" : "text-white/70"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
 
             <a
               href={ROADMAP_HREF}
@@ -89,16 +97,22 @@ export function LandingNav() {
 
         {open && (
           <div className="flex flex-col gap-1 border-t border-white/10 px-4 py-3 md:hidden">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className={`rounded-lg px-2 py-2 text-sm text-white/70 transition-colors hover:bg-white/5 hover:text-white ${FOCUS_RING}`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const isActive = !link.href.includes("#") && pathname === link.href;
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`rounded-lg px-2 py-2 text-sm transition-colors hover:bg-white/5 hover:text-white ${FOCUS_RING} ${
+                    isActive ? "bg-white/5 text-white" : "text-white/70"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
             <a
               href={ROADMAP_HREF}
               target="_blank"

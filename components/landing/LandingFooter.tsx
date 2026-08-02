@@ -90,7 +90,7 @@ export function LandingFooter() {
 
             <div className="space-y-3 text-white/60">
 
-              <a href="#features" className="block rounded hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/70">
+              <a href="/#features" className="block rounded hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/70">
                 Features
               </a>
 
@@ -98,7 +98,7 @@ export function LandingFooter() {
                 Launch
               </Link>
 
-              <a href="#faq" className="block rounded hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/70">
+              <a href="/#faq" className="block rounded hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/70">
                 FAQ
               </a>
 

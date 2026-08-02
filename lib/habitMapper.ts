@@ -9,7 +9,8 @@ interface HabitRow {
   created_at: string;
 }
 
-export function mapRowToHabit(row: HabitRow, loggedDates: string[]): Habit {
+export function mapRowToHabit(input: Record<string, any>, loggedDates: string[]): Habit {
+  const row = input as HabitRow;
   const loggedSet = new Set(loggedDates);
   const todayStr = toDateString(new Date());
 

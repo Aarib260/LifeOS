@@ -17,7 +17,8 @@ function trimSeconds(time: string | null): string | null {
   return time ? time.slice(0, 5) : null;
 }
 
-export function mapRowToEvent(row: EventRow): CalendarEvent {
+export function mapRowToEvent(input: Record<string, any>): CalendarEvent {
+  const row = input as EventRow;
   return {
     id: row.id,
     title: row.title,
