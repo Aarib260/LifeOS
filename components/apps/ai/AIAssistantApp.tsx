@@ -29,7 +29,7 @@ export function AIAssistantApp() {
           <div className="flex h-full flex-col items-center justify-center gap-2 text-center text-[var(--text-4)]">
             <Sparkles className="h-6 w-6" />
             <p className="max-w-[220px] text-xs">
-              Ask about your tasks, habits, goals, or upcoming events.
+              Ask about your tasks, habits, goals, or upcoming events — or ask me to open an app.
             </p>
           </div>
         )}
@@ -48,7 +48,7 @@ export function AIAssistantApp() {
 
         {isError && (
           <p className="text-center text-xs text-red-300/70">
-            Something went wrong. Check your OPENROUTER_API_KEY.
+            Something went wrong. Check your HACKCLUB_AI_API_KEY.
           </p>
         )}
       </div>

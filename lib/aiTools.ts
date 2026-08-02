@@ -7,12 +7,33 @@ import { toDateString } from "@/lib/streak";
 
 /**
  * OpenAI-compatible tool schemas (OpenRouter uses the same format).
- * Kept intentionally read-only for now — the assistant can look things
- * up but can't create/modify/delete anything yet. That's a deliberate
- * scope cut, not an oversight: write access needs confirmation flows
- * (the same "confirm before acting" pattern as any agent) that are
- * worth building carefully rather than bolting on here.
+ * Data access stays read-only — the assistant can look up tasks, habits,
+ * goals, and events, but still can't create/edit/delete any of them.
+ * That's a deliberate scope cut, not an oversight: write access needs a
+ * confirm-before-acting flow (the same pattern any tool-using agent
+ * should have) that's worth building carefully rather than bolting on.
+ * open_app is the one exception: it's non-destructive (worst case it
+ * opens the wrong window) so it doesn't need that same confirmation gate.
  */
+/**
+ * Apps the assistant can launch on the user's behalf. Deliberately
+ * excludes "file-viewer" (needs a specific file id as context — "just
+ * open it" doesn't mean anything) and "ai-assistant" (it's already open,
+ * asking it to open itself is a no-op at best).
+ */
+export const LAUNCHABLE_APP_IDS = [
+  "tasks",
+  "habits",
+  "goals",
+  "calendar",
+  "journal",
+  "settings",
+  "terminal",
+  "file-explorer",
+  "app-store",
+  "performance-monitor",
+] as const;
+
 export const AI_TOOLS = [
   {
     type: "function",
@@ -44,6 +65,25 @@ export const AI_TOOLS = [
       name: "get_upcoming_events",
       description: "Get the user's upcoming calendar events, soonest first.",
       parameters: { type: "object", properties: {}, required: [] },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "open_app",
+      description:
+        "Open or switch to one of the user's apps as a window on the desktop. Use this when the user asks to open, launch, or switch to a specific app by name.",
+      parameters: {
+        type: "object",
+        properties: {
+          appId: {
+            type: "string",
+            enum: LAUNCHABLE_APP_IDS,
+            description: "The app to open.",
+          },
+        },
+        required: ["appId"],
+      },
     },
   },
 ] as const;
@@ -112,18 +152,32 @@ async function getUpcomingEvents() {
   }));
 }
 
-const TOOL_EXECUTORS: Record<string, () => Promise<unknown>> = {
+function openApp(args: Record<string, unknown>) {
+  const appId = args.appId;
+  if (typeof appId !== "string" || !LAUNCHABLE_APP_IDS.includes(appId as (typeof LAUNCHABLE_APP_IDS)[number])) {
+    return Promise.resolve({ error: `Not a launchable app id: ${String(appId)}` });
+  }
+  // No DB write, no window actually opens here — this just confirms the
+  // request is valid. The route handler surfaces this as an `action` in
+  // its response, and the client (useChat) is what actually calls the
+  // window store's openApp, since that's client-only Zustand state a
+  // server route has no way to reach.
+  return Promise.resolve({ opened: appId });
+}
+
+const TOOL_EXECUTORS: Record<string, (args: Record<string, unknown>) => Promise<unknown>> = {
   get_tasks: getTasks,
   get_habits: getHabits,
   get_goals: getGoals,
   get_upcoming_events: getUpcomingEvents,
+  open_app: openApp,
 };
 
-export async function executeTool(name: string): Promise<unknown> {
+export async function executeTool(name: string, args: Record<string, unknown> = {}): Promise<unknown> {
   const executor = TOOL_EXECUTORS[name];
   if (!executor) return { error: `Unknown tool: ${name}` };
   try {
-    return await executor();
+    return await executor(args);
   } catch (error) {
     console.error(`[AI tool: ${name}]`, error);
     return { error: `Failed to run ${name}` };
