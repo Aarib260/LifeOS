@@ -50,6 +50,11 @@ const FEATURE_DESCRIPTIONS: Record<AppId, string> = {
     "Keep an eye on how your OS is running under the hood, in real time.",
 };
 
+const APP_MAP = Object.fromEntries(APP_LIST.map((app) => [app.id, app])) as Record<
+  AppId,
+  (typeof APP_LIST)[number]
+>;
+
 const SECTIONS = [
   {
     title: "Stay Productive",
@@ -169,9 +174,6 @@ function FeatureCard({ section, index }: CardProps) {
 
       {section.apps.map((id) => {
 
-        const APP_MAP = Object.fromEntries(
-          APP_LIST.map(app => [app.id, app])
-        );
         const app = APP_MAP[id];
 
         const Icon = app.icon;
@@ -249,11 +251,50 @@ function FeatureCard({ section, index }: CardProps) {
 
       </div>
 
-      <div className="absolute left-8 right-8 top-24 space-y-5">
+      {section.title === "Command Your System" ? (
+        <div className="absolute left-8 right-8 top-24 space-y-4">
+          <div className="rounded-2xl border border-white/10 bg-black/50 p-4 font-mono text-[13px]">
+            <div className="mb-3 flex items-center gap-1.5">
+              <div className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
+              <div className="h-2.5 w-2.5 rounded-full bg-yellow-500/80" />
+              <div className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
+              <span className="ml-2 text-white/55">terminal</span>
+            </div>
+            <div className="space-y-1.5">
+              <div className="text-violet-300">$ cd ~/projects/lifeos</div>
+              <div className="text-violet-300">$ ls -la</div>
+              <div className="text-white/55">drwxr-xr-x  app</div>
+              <div className="text-white/55">drwxr-xr-x  components</div>
+              <div className="text-white/55">-rw-r--r--  package.json</div>
+              <div className="text-violet-300">
+                $ <span className="animate-pulse">_</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+            <div className="mb-2 text-xs uppercase tracking-widest text-white/55">
+              File Explorer
+            </div>
+            <div className="space-y-1.5 text-sm text-white/70">
+              <div className="flex items-center gap-2">
+                <span className="text-violet-300">📁</span> Documents
+              </div>
+              <div className="ml-4 flex items-center gap-2">
+                <span className="text-white/55">📄</span> resume.md
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-violet-300">📁</span> Projects
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="absolute left-8 right-8 top-24 space-y-5">
 
         {section.apps.map((id) => {
 
-          const app = APP_LIST.find(a => a.id === id)!;
+          const app = APP_MAP[id];
 
           const Icon = app.icon;
 
@@ -283,7 +324,7 @@ function FeatureCard({ section, index }: CardProps) {
 
                 </div>
 
-                <div className="mt-1 text-sm text-white/45">
+                <div className="mt-1 text-sm text-white/55">
 
                   Ready to launch
 
@@ -297,7 +338,8 @@ function FeatureCard({ section, index }: CardProps) {
 
         })}
 
-      </div>
+        </div>
+      )}
 
     </div>
 

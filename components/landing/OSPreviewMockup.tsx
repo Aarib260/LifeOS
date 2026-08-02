@@ -113,7 +113,7 @@ export function OSPreviewMockup() {
           <div className="absolute right-6 top-[168px] w-56 rounded-2xl border border-white/10 bg-black/50 p-4 backdrop-blur-md">
             <div className="mb-2 flex items-center justify-between">
               <p className="text-xs font-medium text-white/70">Today</p>
-              <p className="text-xs text-white/40">
+              <p className="text-xs text-white/55">
                 {completedCount}/{TASKS.length}
               </p>
             </div>
@@ -127,7 +127,7 @@ export function OSPreviewMockup() {
                   >
                     {task.done && <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />}
                   </div>
-                  <span className={`text-xs ${task.done ? "text-white/40 line-through" : "text-white/70"}`}>
+                  <span className={`text-xs ${task.done ? "text-white/55 line-through" : "text-white/70"}`}>
                     {task.label}
                   </span>
                 </div>

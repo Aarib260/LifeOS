@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type ComponentType } from "react";
+import { useEffect, useMemo, useRef, useState, type ComponentType, type DragEvent } from "react";
 import { motion } from "framer-motion";
 import { useQueryClient } from "@tanstack/react-query";
 import { Folder, File as FileIcon } from "lucide-react";
@@ -322,7 +322,7 @@ export function DesktopIconGrid() {
               else iconRefs.current.delete(icon.id);
             }}
             draggable
-            onDragStart={(e) => handleDragStart(e, icon.id)}
+            onDragStart={(e) => handleDragStart(e as unknown as DragEvent, icon.id)}
             onPointerDown={(e) => e.stopPropagation()}
             style={{
               position: "absolute",

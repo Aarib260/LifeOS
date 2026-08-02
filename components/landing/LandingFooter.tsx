@@ -84,7 +84,7 @@ export function LandingFooter() {
 
           <div>
 
-            <h4 className="mb-4 text-sm font-semibold uppercase tracking-widest text-white/40">
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-widest text-white/55">
               Product
             </h4>
 
@@ -108,7 +108,7 @@ export function LandingFooter() {
 
           <div>
 
-  <h4 className="mb-4 text-sm font-semibold uppercase tracking-widest text-white/40">
+  <h4 className="mb-4 text-sm font-semibold uppercase tracking-widest text-white/55">
     Built With
   </h4>
 
@@ -135,7 +135,7 @@ export function LandingFooter() {
 
         </div>
 
-        <div className="mt-16 border-t border-white/10 pt-6 flex flex-col gap-3 text-sm text-white/40 md:flex-row md:justify-between">
+        <div className="mt-16 border-t border-white/10 pt-6 flex flex-col gap-3 text-sm text-white/55 md:flex-row md:justify-between">
 
           <span>© 2026 LifeOS</span>
 

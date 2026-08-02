@@ -30,6 +30,8 @@ export interface WindowState {
   isMaximized: boolean;
   zIndex: number;
   openedAt: number;
+  /** Per-window state an app persists across refresh (e.g. Explorer's current folder, Terminal's cwd/history) — set at open time via OpenAppOptions.payload, merged via the store's updatePayload. */
+  payload?: Record<string, unknown>;
 }
 
 export type WindowId = WindowState["id"];

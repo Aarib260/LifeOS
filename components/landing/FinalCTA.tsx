@@ -63,7 +63,7 @@ export function FinalCTA() {
             <div aria-hidden className="mt-10 space-y-5">
 
               <div>
-                <p className="mb-2 text-sm text-white/45">
+                <p className="mb-2 text-sm text-white/55">
                   Username
                 </p>
 
@@ -73,7 +73,7 @@ export function FinalCTA() {
               </div>
 
               <div>
-                <p className="mb-2 text-sm text-white/45">
+                <p className="mb-2 text-sm text-white/55">
                   Password
                 </p>
 
